@@ -10,6 +10,7 @@ namespace Application_Fusion260
     {
         static void Main(string[] args)
         {
+            
         }
     }
 }
