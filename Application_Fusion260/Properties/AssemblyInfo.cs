@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Application_Fusion260")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Le projet a pour objectif de développer une application destinée à réduire considérablement le temps consacré à l’analyse d’une pièce de CAO à travers la détection automatique de trou.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Application_Fusion260")]

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SldWorks;
+using SwConst;
 
-namespace Application_Fusion260
+namespace hole_namespace
 {
-    internal class Program
+    internal class Hole
     {
-        static void Main(string[] args)
-        {
-            
-        }
     }
 }
