@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * To use the application 
+ * Main class
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,17 +24,31 @@ namespace Application_Fusion260
     {
         static void Main(string[] args)
         {
+            ModelDoc2 swDoc;
+            
+
             // Solid works application connection
             SolidWorksWrapper swAppCalls = new SolidWorksWrapper();
-            
-            if(intitialisation(ref swAppCalls) == true)
+            swDoc = (ModelDoc2)swAppCalls.GetPart();
+            Feature_Explorer swFeatureManager = new Feature_Explorer(swDoc);
+            int feature_count = 0;
+
+            if (intitialisation(ref swAppCalls) == true)
             {
                 Thread.Sleep(2000);
                 return;
             }
-            ModelDoc2 swDoc = swAppCalls.GetPart(); // return the active document
-            Feature_Explorer feature_Explorer = new Feature_Explorer(); // Feature manager explorer declaration
+            
+            // Retreive number of features
+            feature_count = swFeatureManager.getNumberFeatures();
+            Console.Write(feature_count);
+            Thread.Sleep(2000);
         }
+
+
+        /*
+         * Method to initialise our code and connect to SolidWorks
+         */
 
         public static bool intitialisation(ref SolidWorksWrapper swAppCalls)
         {

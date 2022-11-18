@@ -1,17 +1,16 @@
-﻿/* 
- * For management hole
+﻿/*
+ * Using for export our holes' features
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SldWorks;
-using SwConst;
 
-namespace hole_namespace
+namespace Application_Fusion260
 {
-    internal class Hole
+    internal class Export
     {
     }
 }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Export.cs" />
     <Compile Include="Feature_Explorer.cs" />
     <Compile Include="hole.cs" />
     <Compile Include="Application.cs" />
