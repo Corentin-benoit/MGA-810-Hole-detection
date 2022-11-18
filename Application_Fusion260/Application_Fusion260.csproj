@@ -45,8 +45,10 @@
   <ItemGroup>
     <Compile Include="Export.cs" />
     <Compile Include="Feature_Explorer.cs" />
-    <Compile Include="hole.cs" />
+    <Compile Include="Holes\conicalHole.cs" />
+    <Compile Include="Holes\hole.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Holes\wizardHole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolidWorksWrapper.cs" />
   </ItemGroup>
@@ -63,10 +65,37 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="SolidWorks">
+      <Guid>{801A0000-A66C-11D3-A8BD-0000861EBBD6}</Guid>
+      <VersionMajor>30</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SwCommands">
+      <Guid>{0AC1DE9F-3FBC-4C25-868D-7D4E9139CCE0}</Guid>
+      <VersionMajor>30</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="SwConst">
       <Guid>{4687F359-55D0-4CD3-B6CF-2EB42C11F989}</Guid>
       <VersionMajor>30</VersionMajor>
       <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SWUtilities">
+      <Guid>{62E9747A-1836-436E-827F-0AE2E0081353}</Guid>
+      <VersionMajor>2007</VersionMajor>
+      <VersionMinor>5</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>

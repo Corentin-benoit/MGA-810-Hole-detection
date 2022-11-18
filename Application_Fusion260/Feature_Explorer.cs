@@ -13,8 +13,14 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Application_Fusion260
 {
+
+
+    
     internal class Feature_Explorer
     {
+
+
+        
         /*
          * Attributes
          */
@@ -58,26 +64,41 @@ namespace Application_Fusion260
             Object[] features = swFeatureManager.GetFeatures(true); 
             return features;
         }
-
-        public void browseFeatures()
-        {
-
-        } 
-        
         /*
-            FeatureManager swFeatureManager = swDoc.FeatureManager;
-            object[] features = swFeatureManager.GetFeatures(true);
-            Feature lol;
-            Feature sub;
-            foreach (Object feature in features)
+         * method that return the tree control item of the feature manager
+         */
+        public TreeControlItem GetTreeControlItem()
+        {
+            
+            TreeControlItem rootNode = swFeatureManager.GetFeatureTreeRootItem2(1); 
+            return rootNode;
+            
+        }
+        /*
+         * recursive method inspired from this code : https://www.codestack.net/solidworks-api/document/features-manager/traverse-feature-nodes/
+         *  to traverse go throuth next node
+         */
+        public void TraverseFeatureNodes (TreeControlItem featNode, String offset, List<TreeControlItem> fList)
+        {
+            
+            String offsetSymbol = " ";
+            //Console.WriteLine(offset + featNode.Text);
+            fList.Add(featNode);
+            TreeControlItem swChildFeatNode = featNode.GetFirstChild();
+            while(swChildFeatNode != null)
             {
-                Debug.Print("name features:" + feature);
-                lol = (Feature)feature;
-               
-
-                sub = lol.GetNameForSelection();
-                
+                TraverseFeatureNodes(swChildFeatNode, offset + offsetSymbol, fList);
+                swChildFeatNode = swChildFeatNode.GetNext();
             }
-        */
+        }
+        public List<TreeControlItem> TraverseFeatureManager()
+        {
+            List<TreeControlItem> featureList = new List<TreeControlItem>();
+            TreeControlItem rootNode = GetTreeControlItem();
+            featureList.Add(rootNode);
+            TraverseFeatureNodes(rootNode, "", featureList);
+            return featureList;
+        }
+        
     }
 }

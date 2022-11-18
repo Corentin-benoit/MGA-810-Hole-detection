@@ -16,7 +16,7 @@ using System.Threading;
 
 //Need to be verify
 using hole_namespace;
-
+using System.Security.Cryptography;
 
 namespace Application_Fusion260
 {
@@ -25,12 +25,12 @@ namespace Application_Fusion260
         static void Main(string[] args)
         {
             ModelDoc2 swDoc;
-            
+            List<TreeControlItem> featureList;
 
-            // Solid works application connection
+            // SolidWorks application connection
             SolidWorksWrapper swAppCalls = new SolidWorksWrapper();
             swDoc = (ModelDoc2)swAppCalls.GetPart();
-            Feature_Explorer swFeatureManager = new Feature_Explorer(swDoc);
+            Feature_Explorer myFeatureExplorer = new Feature_Explorer(swDoc);
             int feature_count = 0;
 
             if (intitialisation(ref swAppCalls) == true)
@@ -40,9 +40,44 @@ namespace Application_Fusion260
             }
             
             // Retreive number of features
-            feature_count = swFeatureManager.getNumberFeatures();
-            Console.Write(feature_count);
+            feature_count = myFeatureExplorer.getNumberFeatures();
+            // retrive List of every feature in the Feature Manager
+            featureList = myFeatureExplorer.TraverseFeatureManager();
+            foreach (TreeControlItem feature in featureList){ // traverse the Feature List and print the name
+                Console.Write(feature.Text + "\n");
+               
+               
+            }
+
+            //Test Method
+            object[] bodies;
+            object[] faces;
+            Surface swSurface;
+            bool boolResult;
+            int cpt = 0;
+            Face2[] listhole = new Face2[999];
+            PartDoc swPart = (PartDoc)swAppCalls.GetPart();
+            bodies = swPart.GetBodies2((int)swBodyType_e.swSolidBody, false);
+
+            foreach (Body2 swBody in bodies)
+            {
+                faces = swBody.GetFaces();
+                foreach (Face2 swFace in faces)
+                {
+                    swSurface = swFace.GetSurface();
+                    boolResult = swSurface.IsCylinder();
+
+                    if (boolResult == true)
+                    {
+                        listhole[cpt] = swFace;
+                        cpt++;  
+                    }
+                }
+                wizardHole testHole = new wizardHole(10, 10, cpt, "coco", listhole);
+                testHole.colorHole(swDoc, "red");
+            }
             Thread.Sleep(2000);
+            Thread.Sleep(10000);
         }
 
 
