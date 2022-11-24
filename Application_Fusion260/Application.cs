@@ -73,7 +73,12 @@ namespace Application_Fusion260
                 if( f.GetTypeName2() == "HoleWzd")
                 {
                     //list_HoleWizard.Add((WizardHoleFeatureData2)f.GetDefinition());
+                    Object[] colorInfo = { 200, 0, 0 };
                     list_Face.Add(f.GetFaces());
+                    foreach( Face2 faces in list_Face)
+                    {
+                        faces.MaterialPropertyValues = colorInfo;
+                    }
                     Console.Write("f def :" + f.GetFaces() + "\n");
 
                     wizardHole hole1 = new wizardHole(10, 10, f.GetID(), f.GetTypeName2(), list_Face);
