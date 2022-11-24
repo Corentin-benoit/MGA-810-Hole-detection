@@ -30,6 +30,8 @@ using System.Security.Cryptography;
  * ExtrudeFeatureData2
  * FeatureCut3
  * 
+ * Methode intéressante :
+ * SelectByID2
  * 
  * 
  */
@@ -42,6 +44,7 @@ namespace Application_Fusion260
         {
             ModelDoc2 swDoc;
             List<TreeControlItem> featureList;
+            List<Face2> list_Face = new List<Face2>();
             Object[] f_list;
             List<WizardHoleFeatureData2> list_HoleWizard = new List<WizardHoleFeatureData2>();
             // SolidWorks application connection
@@ -69,24 +72,28 @@ namespace Application_Fusion260
                 Console.Write("\n");*/
                 if( f.GetTypeName2() == "HoleWzd")
                 {
+                    //list_HoleWizard.Add((WizardHoleFeatureData2)f.GetDefinition());
+                    list_Face.Add(f.GetFaces());
+                    Console.Write("f def :" + f.GetFaces() + "\n");
 
-                    list_HoleWizard.Add((WizardHoleFeatureData2)f.GetDefinition());
-                    
-                    
-                }
-                foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
-                {
-                  
-                    Console.Write("holetype : :" + hole.GetType().Name + "\n");
-                    if(hole.GetType().Name == 'CounterboreElementData')
+                    wizardHole hole1 = new wizardHole(10, 10, f.GetID(), f.GetTypeName2(), list_Face);
+                    hole1.colorHole(swDoc, "red");
+                    foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
                     {
-                        CounterboreElementData count_hole = (CounterboreElementData)hole;
-                        count_hole.ge
+                        Console.Write("hole  test:" + hole + "\n");
+                        Console.Write("holetype :" + hole.GetType() + "\n");
+                        
+                        if (hole.GetType().Name == "CounterboreElementData")
+                        {
+                            CounterboreElementData count_hole = (CounterboreElementData)hole;
+                            
+                        }
+                        double b;
+                        b = hole.HoleDepth;
+                        Console.Write("b :" + b + "\n");
                     }
-                    double b;
-                    b = hole.HoleDepth;
-                    Console.Write("b :" + b + "\n");
                 }
+                
                     
                 
             }

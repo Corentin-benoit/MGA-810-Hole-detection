@@ -9,8 +9,6 @@ C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO
 C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO appliquée à la mécanique\Projet session\Application_Fusion260\obj\Debug\Application_Fusion260.csproj.CoreCompileInputs.cache
 C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO appliquée à la mécanique\Projet session\Application_Fusion260\obj\Debug\Application_Fusion260.exe
 C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO appliquée à la mécanique\Projet session\Application_Fusion260\obj\Debug\Application_Fusion260.pdb
-C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO appliquée à la mécanique\Projet session\Application_Fusion260\obj\Debug\Interop.SolidWorks.dll
-C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO appliquée à la mécanique\Projet session\Application_Fusion260\obj\Debug\Interop.SwCommands.dll
 C:\Users\coco2\OneDrive - ETS\Cours\MGA810-01 Personnalisation des systèmes CAO appliquée à la mécanique\Projet session\Application_Fusion260\obj\Debug\Interop.SWUtilities.dll
 C:\Users\marti\source\repos\Corentin-benoit\MGA-810-Hole-detection\Application_Fusion260\bin\Debug\Application_Fusion260.exe.config
 C:\Users\marti\source\repos\Corentin-benoit\MGA-810-Hole-detection\Application_Fusion260\bin\Debug\Application_Fusion260.exe
