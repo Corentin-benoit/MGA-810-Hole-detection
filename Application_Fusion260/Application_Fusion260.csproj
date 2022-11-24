@@ -45,9 +45,11 @@
   <ItemGroup>
     <Compile Include="Export.cs" />
     <Compile Include="Feature_Explorer.cs" />
+    <Compile Include="Holes\advanceHole.cs" />
     <Compile Include="Holes\conicalHole.cs" />
     <Compile Include="Holes\hole.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Holes\simpleHole.cs" />
     <Compile Include="Holes\wizardHole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolidWorksWrapper.cs" />

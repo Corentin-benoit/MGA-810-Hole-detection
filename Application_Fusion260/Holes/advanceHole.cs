@@ -1,5 +1,4 @@
-﻿using hole_namespace;
-using SldWorks;
+﻿using SldWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace hole_namespace
-{
-    internal class wizardHole : Hole
+{ 
+    internal class advanceHole : Hole
     {
         /*
-         * Constructor
-         */
-        public wizardHole(double depth, double radius, int id, string functionHoleCreation, List<Face2> holeFaces) 
-        { 
+        * Constructor
+        */
+        public advanceHole(double depth, double radius, int id, string functionHoleCreation, List<Face2> holeFaces)
+        {
             this.depth = depth;
             this.radius = radius;
             this.id = id;

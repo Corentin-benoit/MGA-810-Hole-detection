@@ -22,7 +22,7 @@ namespace hole_namespace
         protected double radius;
         protected int id; // Id of the hole 
         protected string functionHoleCreation; //Name of the function which created the hole
-        protected Face2[] holeFaces; //Main cylindrical faces of the hole
+        protected List<Face2> holeFaces; //Main cylindrical faces of the hole
 
         /*
          * Assessors

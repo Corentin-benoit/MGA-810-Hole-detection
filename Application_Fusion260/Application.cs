@@ -18,6 +18,22 @@ using System.Threading;
 using hole_namespace;
 using System.Security.Cryptography;
 
+/*
+ * Utile types
+ * WizardHoleFeatureData2
+ * SimpleHoleFeatureData2
+ * AdvancedHole2
+ * MirrorPartFeatureData
+ * 
+ * 
+ * 
+ * ExtrudeFeatureData2
+ * FeatureCut3
+ * 
+ * 
+ * 
+ */
+
 namespace Application_Fusion260
 {
     internal class Application
@@ -26,58 +42,64 @@ namespace Application_Fusion260
         {
             ModelDoc2 swDoc;
             List<TreeControlItem> featureList;
-
+            Object[] f_list;
+            List<WizardHoleFeatureData2> list_HoleWizard = new List<WizardHoleFeatureData2>();
             // SolidWorks application connection
             SolidWorksWrapper swAppCalls = new SolidWorksWrapper();
             swDoc = (ModelDoc2)swAppCalls.GetPart();
             Feature_Explorer myFeatureExplorer = new Feature_Explorer(swDoc);
             int feature_count = 0;
 
-            if (intitialisation(ref swAppCalls) == true)
+            if (intitialisation(ref swAppCalls) == true) // solidworks' connection 
             {
                 Thread.Sleep(2000);
                 return;
             }
-            
+
+            f_list = (Object[])myFeatureExplorer.getListFeature();
+            foreach (Feature f in f_list){
+                //Console.Write("GetDefinition() :" + f.GetDefinition() + "\n");
+                Console.Write("GetTypeName2 :" + f.GetTypeName2() + "\n");
+                /*Console.Write("GetSpecificFeature2:" + f.GetSpecificFeature2() + "\n");
+                Console.Write("GetEditStatus() :" + f.GetEditStatus() + "\n");
+                Console.Write("GetFirstSubFeature() :" + f.GetFirstSubFeature() + "\n");
+                Console.Write("GetID() :" + f.GetID() + "\n");
+                Console.Write("\n");
+                Console.Write("\n");
+                Console.Write("\n");*/
+                if( f.GetTypeName2() == "HoleWzd")
+                {
+
+                    list_HoleWizard.Add((WizardHoleFeatureData2)f.GetDefinition());
+                    
+                    
+                }
+                foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
+                {
+
+                    //Console.Write("point :" + hole.Face + "\n");
+                    //List<Face2> l = new List<Face2>();
+                    double dia = hole.Depth;
+                    Console.Write("dia :" + dia + "\n");
+                    //Face2 face_test = (Face2)hole.Face;
+                    //Console.Write("point :" + face_test + "\n");
+
+
+                    //hole.co
+                }
+                    
+                
+            }
+
             // Retreive number of features
             feature_count = myFeatureExplorer.getNumberFeatures();
             // retrive List of every feature in the Feature Manager
             featureList = myFeatureExplorer.TraverseFeatureManager();
             foreach (TreeControlItem feature in featureList){ // traverse the Feature List and print the name
-                Console.Write(feature.Text + "\n");
-               
-               
+                //Console.Write(feature.Text + "\n");
             }
+            Thread.Sleep(1000000);
 
-            //Test Method
-            object[] bodies;
-            object[] faces;
-            Surface swSurface;
-            bool boolResult;
-            int cpt = 0;
-            Face2[] listhole = new Face2[999];
-            PartDoc swPart = (PartDoc)swAppCalls.GetPart();
-            bodies = swPart.GetBodies2((int)swBodyType_e.swSolidBody, false);
-
-            foreach (Body2 swBody in bodies)
-            {
-                faces = swBody.GetFaces();
-                foreach (Face2 swFace in faces)
-                {
-                    swSurface = swFace.GetSurface();
-                    boolResult = swSurface.IsCylinder();
-
-                    if (boolResult == true)
-                    {
-                        listhole[cpt] = swFace;
-                        cpt++;  
-                    }
-                }
-                wizardHole testHole = new wizardHole(10, 10, cpt, "coco", listhole);
-                testHole.colorHole(swDoc, "red");
-            }
-            Thread.Sleep(2000);
-            Thread.Sleep(10000);
         }
 
 
@@ -106,6 +128,37 @@ namespace Application_Fusion260
                 return true;
             }
             return false;
+        }
+
+        public static void testColor(SolidWorksWrapper swAppCalls, ModelDoc2 swDoc)
+        {
+            //Test Method
+            object[] bodies;
+            object[] faces;
+            Surface swSurface;
+            bool boolResult;
+            int cpt = 0;
+            List<Face2> listhole = new List<Face2>();
+            PartDoc swPart = (PartDoc)swAppCalls.GetPart();
+            bodies = swPart.GetBodies2((int)swBodyType_e.swSolidBody, false);
+
+            foreach (Body2 swBody in bodies)
+            {
+                faces = swBody.GetFaces();
+                foreach (Face2 swFace in faces)
+                {
+                    swSurface = swFace.GetSurface();
+                    boolResult = swSurface.IsCylinder();
+
+                    if (boolResult == true)
+                    {
+                        listhole.Add(swFace);
+                        cpt++;
+                    }
+                }
+                wizardHole testHole = new wizardHole(10, 10, cpt, "coco", listhole);
+                testHole.colorHole(swDoc, "orange");
+            }
         }
     }
 }
