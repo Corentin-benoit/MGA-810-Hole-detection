@@ -76,16 +76,16 @@ namespace Application_Fusion260
                 }
                 foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
                 {
-
-                    //Console.Write("point :" + hole.Face + "\n");
-                    //List<Face2> l = new List<Face2>();
-                    double dia = hole.Depth;
-                    Console.Write("dia :" + dia + "\n");
-                    //Face2 face_test = (Face2)hole.Face;
-                    //Console.Write("point :" + face_test + "\n");
-
-
-                    //hole.co
+                  
+                    Console.Write("holetype : :" + hole.GetType().Name + "\n");
+                    if(hole.GetType().Name == 'CounterboreElementData')
+                    {
+                        CounterboreElementData count_hole = (CounterboreElementData)hole;
+                        count_hole.ge
+                    }
+                    double b;
+                    b = hole.HoleDepth;
+                    Console.Write("b :" + b + "\n");
                 }
                     
                 

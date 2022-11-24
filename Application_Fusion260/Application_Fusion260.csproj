@@ -60,25 +60,7 @@
   <ItemGroup>
     <COMReference Include="SldWorks">
       <Guid>{83A33D31-27C5-11CE-BFD4-00400513BB57}</Guid>
-      <VersionMajor>30</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="SolidWorks">
-      <Guid>{801A0000-A66C-11D3-A8BD-0000861EBBD6}</Guid>
-      <VersionMajor>30</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="SwCommands">
-      <Guid>{0AC1DE9F-3FBC-4C25-868D-7D4E9139CCE0}</Guid>
-      <VersionMajor>30</VersionMajor>
+      <VersionMajor>29</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -87,7 +69,7 @@
     </COMReference>
     <COMReference Include="SwConst">
       <Guid>{4687F359-55D0-4CD3-B6CF-2EB42C11F989}</Guid>
-      <VersionMajor>30</VersionMajor>
+      <VersionMajor>29</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
