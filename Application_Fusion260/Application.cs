@@ -17,6 +17,7 @@ using System.Threading;
 //Need to be verify
 using hole_namespace;
 using System.Security.Cryptography;
+using System.Linq.Expressions;
 
 /*
  * Utile types
@@ -42,11 +43,10 @@ namespace Application_Fusion260
     {
         static void Main(string[] args)
         {
+            /* 
+             * FOR CONNECTION
+             */
             ModelDoc2 swDoc;
-            List<TreeControlItem> featureList;
-            List<Face2> list_Face = new List<Face2>();
-            Object[] f_list;
-            List<WizardHoleFeatureData2> list_HoleWizard = new List<WizardHoleFeatureData2>();
             // SolidWorks application connection
             SolidWorksWrapper swAppCalls = new SolidWorksWrapper();
             swDoc = (ModelDoc2)swAppCalls.GetPart();
@@ -58,50 +58,95 @@ namespace Application_Fusion260
                 Thread.Sleep(2000);
                 return;
             }
+            /*
+             * END FOR CONNECTION
+             */
 
+            /*
+             * INITIALISATION 
+             */
+            List<TreeControlItem> featureList;
+            Object[] f_list;
+            //List<WizardHoleFeatureData2> list_HoleWizard = new List<WizardHoleFeatureData2>();
+            List<Hole> list_Hole = new List<Hole>();
             f_list = (Object[])myFeatureExplorer.getListFeature();
-            foreach (Feature f in f_list){
+            /*
+             * END INITIALISATION
+             */
+
+            //Browse inside FeatureManager
+            foreach (Feature feature in f_list){
                 //Console.Write("GetDefinition() :" + f.GetDefinition() + "\n");
-                Console.Write("GetTypeName2 :" + f.GetTypeName2() + "\n");
-                /*Console.Write("GetSpecificFeature2:" + f.GetSpecificFeature2() + "\n");
-                Console.Write("GetEditStatus() :" + f.GetEditStatus() + "\n");
-                Console.Write("GetFirstSubFeature() :" + f.GetFirstSubFeature() + "\n");
-                Console.Write("GetID() :" + f.GetID() + "\n");
-                Console.Write("\n");
-                Console.Write("\n");
-                Console.Write("\n");*/
+                //Console.Write("GetTypeName2 :" + f.GetTypeName2() + "\n");
+                Console.Write("GetTypeName :" + feature.GetTypeName2() + "\n");
+                switch (feature.GetTypeName2())
+                {
+                    case "HoleWzd":
+
+                        //We collect data
+                        int id = feature.GetID();
+                        Console.Write("Vérification id =" + id + "\n");
+
+                        string functionHoleCreation = feature.GetTypeName();
+                        Console.Write("Vérification name function =" + functionHoleCreation + "\n");
+
+                        List<Face2> holeFaces = new List<Face2>();
+                        Object[] tab_Faces;
+                        tab_Faces = feature.GetFaces();
+                        foreach (Face2 face in tab_Faces)
+                        {
+                            holeFaces.Add(face);
+                        }
+
+                        //We create a new object WizardHole
+                        WizardHole holewizard = new WizardHole(id, functionHoleCreation, holeFaces);
+
+                        //We save the object inside the list 
+                        list_Hole.Add(holewizard);
+
+                        break;
+                    case "AdvHoleWzd":
+                        //We collect data
+                        break;
+                    default:
+                        // code block
+                        break;
+                }
+                foreach (Hole hole in list_Hole)
+                {
+                    hole.colorHole(swDoc, "green");
+                }
+                /*
                 if( f.GetTypeName2() == "HoleWzd")
                 {
                     //list_HoleWizard.Add((WizardHoleFeatureData2)f.GetDefinition());
-                    Object[] colorInfo = { 200, 0, 0 };
-                    list_Face.Add(f.GetFaces());
-                    foreach( Face2 faces in list_Face)
+                  
+                    list_Face = f.GetFaces();
+                    foreach (Face2 faces in list_Face)
                     {
-                        faces.MaterialPropertyValues = colorInfo;
+                        color(swDoc, "red", faces);
                     }
-                    Console.Write("f def :" + f.GetFaces() + "\n");
-
-                    wizardHole hole1 = new wizardHole(10, 10, f.GetID(), f.GetTypeName2(), list_Face);
-                    hole1.colorHole(swDoc, "red");
-                    foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
-                    {
-                        Console.Write("hole  test:" + hole + "\n");
-                        Console.Write("holetype :" + hole.GetType() + "\n");
-                        
-                        if (hole.GetType().Name == "CounterboreElementData")
-                        {
-                            CounterboreElementData count_hole = (CounterboreElementData)hole;
-                            
-                        }
-                        double b;
-                        b = hole.HoleDepth;
-                        Console.Write("b :" + b + "\n");
-                    }
-                }
-                
                     
-                
-            }
+                  */
+
+                /*
+                foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
+                {
+                    Console.Write("hole  test:" + hole + "\n");
+                    Console.Write("holetype :" + hole.GetType() + "\n");
+
+                    if (hole.GetType().Name == "CounterboreElementData")
+                    {
+                        CounterboreElementData count_hole = (CounterboreElementData)hole;
+
+                    }
+                    double b;
+                    b = hole.HoleDepth;
+                    Console.Write("b :" + b + "\n");
+                }
+                */
+            }   
+            
 
             // Retreive number of features
             feature_count = myFeatureExplorer.getNumberFeatures();
@@ -142,6 +187,47 @@ namespace Application_Fusion260
             return false;
         }
 
+        public static void color(ModelDoc2 swDoc, string color, Face2 swFace)
+        {
+            double[] descriptionColor = new double[3];
+
+            //Take the right color
+            switch (color)
+            {
+                case "orange":
+                    //rgb(240, 94, 0)
+                    descriptionColor[0] = 240.0f / 255.0f;
+                    descriptionColor[1] = 94.0f / 255.0f;
+                    descriptionColor[2] = 0.0f / 255.0f;
+                    break;
+                case "red":
+                    //rgb(198, 26, 15)
+                    descriptionColor[0] = 198.0f / 255.0f;
+                    descriptionColor[1] = 26.0f / 255.0f;
+                    descriptionColor[2] = 15.0f / 255.0f;
+                    break;
+                case "green":
+                    //rgb(75, 152, 28)
+                    descriptionColor[0] = 75.0f / 255.0f;
+                    descriptionColor[1] = 152.0f / 255.0f;
+                    descriptionColor[2] = 28.0f / 255.0f;
+                    break;
+                default:
+                    //Penser à récupérer
+                    throw new ArgumentException("Parameter is not a usable color", nameof(color));
+            }
+            double[] colorInfo = swFace.MaterialPropertyValues;
+            if (colorInfo == null)
+            {
+                colorInfo = swDoc.MaterialPropertyValues;
+            }
+            for (int cpt = 0; cpt < 3; cpt++)
+            {
+                colorInfo[cpt] = descriptionColor[cpt];
+            }
+            swFace.MaterialPropertyValues = colorInfo;
+        }
+
         public static void testColor(SolidWorksWrapper swAppCalls, ModelDoc2 swDoc)
         {
             //Test Method
@@ -168,7 +254,7 @@ namespace Application_Fusion260
                         cpt++;
                     }
                 }
-                wizardHole testHole = new wizardHole(10, 10, cpt, "coco", listhole);
+                WizardHole testHole = new WizardHole(10, 10, cpt, "coco", listhole);
                 testHole.colorHole(swDoc, "orange");
             }
         }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace hole_namespace
 {
-    internal class simpleHole : Hole
+    internal class SimpleHole : Hole
     {
         /*
         * Constructor
         */
-        public simpleHole(double depth, double radius, int id, string functionHoleCreation, List<Face2> holeFaces)
+        public SimpleHole(double depth, double radius, int id, string functionHoleCreation, List<Face2> holeFaces)
         {
             this.depth = depth;
             this.radius = radius;
