@@ -79,7 +79,6 @@ namespace Application_Fusion260
                 //Console.Write("GetDefinition() :" + f.GetDefinition() + "\n");
                 //Console.Write("GetTypeName2 :" + f.GetTypeName2() + "\n");
                 Console.Write("GetTypeName :" + feature.GetTypeName2() + "\n");
-               
                 switch (feature.GetTypeName2())
                 {
                     case "HoleWzd":
@@ -104,9 +103,7 @@ namespace Application_Fusion260
 
                         //We save the object inside the list 
                         list_Hole.Add(holewizard);
-                        
-                        
-                            f.GetDefinition()
+
                         break;
                     case "AdvHoleWzd":
                         //We collect data
