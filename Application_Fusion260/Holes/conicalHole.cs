@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hole_namespace
 {
-    internal class ConicalHole : Hole
+    internal class conicalHole : Hole
     {
         public override List<string> extractCharacteristicHole()
         {
