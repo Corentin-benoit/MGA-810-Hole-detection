@@ -126,28 +126,28 @@ namespace Application_Fusion260
                     {
                         color(swDoc, "red", faces);
                     }
-                    
+
                   */
 
                 /*
-                foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
-                {
-                    Console.Write("hole  test:" + hole + "\n");
-                    Console.Write("holetype :" + hole.GetType() + "\n");
-
-                    if (hole.GetType().Name == "CounterboreElementData")
+                    foreach (WizardHoleFeatureData2 hole in list_HoleWizard)
                     {
-                        CounterboreElementData count_hole = (CounterboreElementData)hole;
-
+                        Console.Write("hole  test:" + hole + "\n");
+                        Console.Write("holetype :" + hole.GetType() + "\n");
+                        
+                        if (hole.GetType().Name == "CounterboreElementData")
+                        {
+                            CounterboreElementData count_hole = (CounterboreElementData)hole;
+                            
+                        }
+                        double b;
+                        b = hole.HoleDepth;
+                        Console.Write("b :" + b + "\n");
                     }
-                    double b;
-                    b = hole.HoleDepth;
-                    Console.Write("b :" + b + "\n");
-                }
                 */
-            }   
-            
-
+                }
+                
+                    
             // Retreive number of features
             feature_count = myFeatureExplorer.getNumberFeatures();
             // retrive List of every feature in the Feature Manager
