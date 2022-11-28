@@ -19,7 +19,7 @@ namespace hole_namespace
          * Attributes
          */
         protected double depth;
-        protected double radius;
+        protected double diameter;
         protected int id; // Id of the hole 
         protected string functionHoleCreation; //Name of the function which created the hole
         protected List<Face2> holeFaces; //Main cylindrical faces of the hole
@@ -28,7 +28,7 @@ namespace hole_namespace
          * Assessors
          */
         public double getDepth() { return depth; }
-        public double getRadius() { return radius; }
+        public double getDiameter() { return diameter; }
         public int getId() { return id; }
         public string getFunctionHoleCreation() { return functionHoleCreation; }
 
@@ -100,7 +100,7 @@ namespace hole_namespace
         public bool sizeRespected(float min_depth, float max_depth, float min_radius, float max_radius)
         {
             double lu = this.depth;
-            double radius = this.radius;
+            double radius = this.diameter/2.0f;
             double dc = 2*radius;
 
             //Depth test
@@ -109,7 +109,7 @@ namespace hole_namespace
 
             //Radius test
             if (radius < min_radius) { return false;}
-            if (radius < max_radius) { return false;}
+            if (radius > max_radius) { return false;}
 
             //Match test
             if (lu > 3*dc) { return false;}

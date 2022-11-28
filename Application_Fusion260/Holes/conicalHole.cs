@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hole_namespace
 {
-    internal class conicalHole : Hole
+    internal class ConicalHole : Hole
     {
         public override List<string> extractCharacteristicHole()
         {
@@ -17,7 +17,7 @@ namespace hole_namespace
         public bool sizeRespected(float Chanfrein_size_min, float Chanfrein_size_max, float min_depth, float max_depth, float min_radius, float max_radius)
         {
             double lu = this.depth;
-            double radius = this.radius;
+            double radius = this.diameter;
             double dc = 2 * radius;
 
             //Depth test

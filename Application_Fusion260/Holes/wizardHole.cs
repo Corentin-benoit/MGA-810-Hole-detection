@@ -8,19 +8,33 @@ using System.Threading.Tasks;
 
 namespace hole_namespace
 {
-    internal class wizardHole : Hole
+    internal class WizardHole : Hole
     {
+        /*
+         * Attributes
+         */
+        protected string norme;
+
         /*
          * Constructor
          */
-        public wizardHole(double depth, double radius, int id, string functionHoleCreation, List<Face2> holeFaces) 
+        public WizardHole(double depth, double diameter, int id, string functionHoleCreation, List<Face2> holeFaces, string norme) 
         { 
             this.depth = depth;
-            this.radius = radius;
+            this.diameter = diameter;
+            this.id = id;
+            this.functionHoleCreation = functionHoleCreation;
+            this.holeFaces = holeFaces;
+            this.norme = norme;
+        }
+
+        public WizardHole(int id, string functionHoleCreation, List<Face2> holeFaces)
+        {
             this.id = id;
             this.functionHoleCreation = functionHoleCreation;
             this.holeFaces = holeFaces;
         }
+
         public override List<string> extractCharacteristicHole()
         {
             throw new NotImplementedException();
