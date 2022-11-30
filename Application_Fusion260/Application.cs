@@ -18,6 +18,8 @@ using System.Threading;
 using hole_namespace;
 using System.Security.Cryptography;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
+
 
 /*
  * Utile types
@@ -47,6 +49,20 @@ namespace Application_Fusion260
         public static float MIN_RADIUS = 0.5f;
         public static float MAX_RADIUS = 500.0f;
 
+        static public DispatchWrapper[] ObjectArrayToDispatchWrapperArray(object[] Objects)
+        {
+            int ArraySize = 0;
+            ArraySize = Objects.GetUpperBound(0);
+            DispatchWrapper[] d = new DispatchWrapper[ArraySize + 1];
+            int ArrayIndex = 0;
+            for (ArrayIndex = 0; ArrayIndex <= ArraySize; ArrayIndex++)
+            {
+                ;
+                d[ArrayIndex] = new DispatchWrapper(Objects[ArrayIndex]);
+            }
+            return d;
+        }
+
         static void Main(string[] args)
         {
             /*
@@ -67,6 +83,8 @@ namespace Application_Fusion260
             int id = 0;
             string functionHoleCreation = "";
             List<Face2> holeFaces;
+
+           
             /*
              * END INITIALISATION
              */
@@ -182,7 +200,11 @@ namespace Application_Fusion260
                     case "AdvHoleWzd":
                         if (feature != null)
                         {
-                           /* CountersinkElementData swCounterSinkNear = default(CountersinkElementData);
+                            FeatureManager swFeatureMgr = default(FeatureManager);
+                            object ResultArray = null;
+                            Feature feat = default(Feature);
+                            AdvancedHoleFeatureData featdata = default(AdvancedHoleFeatureData);
+                            CountersinkElementData swCounterSinkNear = default(CountersinkElementData);
                             CounterboreElementData swCounterBoreFar = default(CounterboreElementData);
                             StraightElementData swStraightHoleFar = default(StraightElementData);
                             StraightTapElementData swStraightTapNear = default(StraightTapElementData);
@@ -199,16 +221,28 @@ namespace Application_Fusion260
                             advHoleFarArr[1] = (AdvancedHoleElementData)swStraightHoleFar;
 
 
-
-                            AdvancedHoleFeatureData swAdvHole_Near_1 = (AdvancedHoleFeatureData)feature.GetDefinition();
-
-                            nearSide = (object[])swAdvHole_Near_1.GetNearSideElements();
-
                             
+                            swFeatureMgr = swDoc.FeatureManager;
+                            
+
+
+                            DispatchWrapper[] dispArray = ObjectArrayToDispatchWrapperArray(new object[] { advHoleNearArr[0], advHoleNearArr[1] });
+                            DispatchWrapper[] dispArray2 = ObjectArrayToDispatchWrapperArray(new object[] { advHoleFarArr[0], advHoleFarArr[1] });
+                            feat = swFeatureMgr.AdvancedHole2(dispArray, dispArray2, false, true, false, out ResultArray);
+                            featdata = (AdvancedHoleFeatureData)feat.GetDefinition();
+                            featdata.AccessSelections(swDoc, null);
+
+                            //AdvancedHoleFeatureData swAdvHole_Near_1 = (AdvancedHoleFeatureData)feature.GetDefinition();
+
+
+
+                            nearSide = (object[])featdata.GetNearSideElements();
+                            
+
                             swCounterSinkNear = (CountersinkElementData)nearSide[0];
 
 
-                            farSide = (object[])swAdvHole_Near_1.GetFarSideElements();
+                            farSide = (object[])featdata.GetFarSideElements();
                             swCounterBoreFar = (CounterboreElementData)farSide[0];
                             swStraightHoleFar = (StraightElementData)farSide[1];
 
@@ -222,9 +256,9 @@ namespace Application_Fusion260
                             //swAdvHole_Far_1 = (AdvancedHoleElementData)
 
 
-                            swAdvHole_Near_1.GetFarSideElements();
+                            //swAdvHole_Near_1.GetFarSideElements();
 
-                            AdvancedHoleElementData swAdvHole = default(AdvancedHoleElementData);
+                            //AdvancedHoleElementData swAdvHole = default(AdvancedHoleElementData);
 
                             //int standard = 
                             //id = feature.GetID();
@@ -232,7 +266,7 @@ namespace Application_Fusion260
 
                             //var standard = feature.
                             //We collect data
-                            */
+                            
                         }
                         break;
                     
