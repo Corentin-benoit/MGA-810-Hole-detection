@@ -9,17 +9,20 @@ namespace hole_namespace
 { 
     internal class AdvanceHole : Hole
     {
+        Object[] nearSideElements;
+        Object[] farSideElements;
         /*
         * Constructor
         */
-        public AdvanceHole(double depth, double diameter, int id, string functionHoleCreation, List<Face2> holeFaces)
+        public AdvanceHole(int id, string functionHoleCreation, List<Face2> holeFaces, Object[] farSideElements, Object[] nearSideElements)
         {
-            this.depth = depth;
-            this.diameter = diameter;
+            
             this.id = id;
             this.functionHoleCreation = functionHoleCreation;
             this.holeFaces = holeFaces;
-        }
+            this.nearSideElements = nearSideElements;
+            this.farSideElements = farSideElements;
+        }   
         public override List<string> extractCharacteristicHole()
         {
             throw new NotImplementedException();
