@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Application_Fusion260"
+    "\\Application_Fusion260",
+    "\\Application_Fusion260\\Holes"
   ],
-  "SelectedNode": "\\Application_Fusion260\\Application.cs",
+  "SelectedNode": "\\Application_Fusion260\\Holes\\wizardHole.cs",
   "PreviewInSolutionExplorer": false
 }

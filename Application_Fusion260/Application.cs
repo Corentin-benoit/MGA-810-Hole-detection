@@ -19,6 +19,7 @@ using hole_namespace;
 using System.Security.Cryptography;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 
 /*
@@ -200,73 +201,43 @@ namespace Application_Fusion260
                     case "AdvHoleWzd":
                         if (feature != null)
                         {
-                            FeatureManager swFeatureMgr = default(FeatureManager);
-                            object ResultArray = null;
-                            Feature feat = default(Feature);
-                            AdvancedHoleFeatureData featdata = default(AdvancedHoleFeatureData);
+                            
+                            AdvancedHoleFeatureData featdata = feature as AdvancedHoleFeatureData;
+                            object[] nearSide = null; // tableaux qui récupèrent les near et far éléments qui composent le perçage 
+                            object[] farSide = null;
+
                             CountersinkElementData swCounterSinkNear = default(CountersinkElementData);
                             CounterboreElementData swCounterBoreFar = default(CounterboreElementData);
                             StraightElementData swStraightHoleFar = default(StraightElementData);
-                            StraightTapElementData swStraightTapNear = default(StraightTapElementData);
-                            TaperedTapElementData swTaperedTapNear = default(TaperedTapElementData);
-                            AdvancedHoleElementData[] advHoleNearArr = new AdvancedHoleElementData[2];
-                            AdvancedHoleElementData[] advHoleFarArr = new AdvancedHoleElementData[2];
-
-                            object[] nearSide;
-                            object[] farSide = null;
-
-                            advHoleNearArr[0] = (AdvancedHoleElementData)swCounterSinkNear;
-                            advHoleNearArr[1] = (AdvancedHoleElementData)swStraightTapNear;
-                            advHoleFarArr[0] = (AdvancedHoleElementData)swCounterBoreFar;
-                            advHoleFarArr[1] = (AdvancedHoleElementData)swStraightHoleFar;
-
-
                             
-                            swFeatureMgr = swDoc.FeatureManager;
+                            featdata = (AdvancedHoleFeatureData)feature.GetDefinition(); // on précise que nous avons affaire a un AdvancedHoleFeatureData
+                            featdata.AccessSelections(swDoc, null); // on accède à l'endroit de l'arbre où on crée le perçage
+                            Console.Write("Number of near side hole elements: " + featdata.NearSideElementsCount + "\n"); // on affiche le nombre de near et far side éléments qui composent le perçage
+                            Console.Write("Number of far side hole elements: " + featdata.FarSideElementsCount + "\n");
                             
-
-
-                            DispatchWrapper[] dispArray = ObjectArrayToDispatchWrapperArray(new object[] { advHoleNearArr[0], advHoleNearArr[1] });
-                            DispatchWrapper[] dispArray2 = ObjectArrayToDispatchWrapperArray(new object[] { advHoleFarArr[0], advHoleFarArr[1] });
-                            feat = swFeatureMgr.AdvancedHole2(dispArray, dispArray2, false, true, false, out ResultArray);
-                            featdata = (AdvancedHoleFeatureData)feat.GetDefinition();
-                            featdata.AccessSelections(swDoc, null);
-
-                            //AdvancedHoleFeatureData swAdvHole_Near_1 = (AdvancedHoleFeatureData)feature.GetDefinition();
-
-
-
-                            nearSide = (object[])featdata.GetNearSideElements();
-                            
-
+                            nearSide = (object[])featdata.GetNearSideElements(); // on les stock dans les tableaux
+                     
                             swCounterSinkNear = (CountersinkElementData)nearSide[0];
-
-
                             farSide = (object[])featdata.GetFarSideElements();
+
+                            foreach (AdvancedHoleElementData farSideElements in farSide) { // on parcours ces tableaux pour connaitre les types des éléments
+
+                                
+                                Console.Write("farSideElements Standard: " + Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), farSideElements.ElementType) + "\n");
+                                Console.Write("farSideElements size:"+ farSideElements.Size  + "\n");
+                            }
                             swCounterBoreFar = (CounterboreElementData)farSide[0];
                             swStraightHoleFar = (StraightElementData)farSide[1];
 
-                            Console.Write("Near side countersink:");
-                            Console.Write("   Hole element type as defined in swAdvWzdGeneralHoleTypes_e: " + ((AdvancedHoleElementData)swCounterSinkNear).ElementType);
-                            Console.Write("   Size as defined on the Advanced Hole PropertyManager page: " + ((AdvancedHoleElementData)swCounterSinkNear).Size);
-                            Console.Write("   Standard as defined in swWzdHoleStandards_e: " + ((AdvancedHoleElementData)swCounterSinkNear).Standard);
 
-                            
-                            //Console.Write("advance hole Diameter =" + AdvHole.Diameter + "\n");
-                            //swAdvHole_Far_1 = (AdvancedHoleElementData)
+                            Console.Write("Near side countersink: \n" );
+
+                            Console.Write("   Hole element type as defined in swAdvWzdGeneralHoleTypes_e: " + ((AdvancedHoleElementData)swCounterSinkNear).ElementType + "\n");
+                            Console.Write("   Size as defined on the Advanced Hole PropertyManager page: " + ((AdvancedHoleElementData)swCounterSinkNear).Size + "\n");
+                            Console.Write("   Standard as defined in swWzdHoleStandards_e: " + ((AdvancedHoleElementData)swCounterSinkNear).Standard + "\n");
+                           
 
 
-                            //swAdvHole_Near_1.GetFarSideElements();
-
-                            //AdvancedHoleElementData swAdvHole = default(AdvancedHoleElementData);
-
-                            //int standard = 
-                            //id = feature.GetID();
-                            //Console.Write("Vérification id adv =" + standard + "\n");
-
-                            //var standard = feature.
-                            //We collect data
-                            
                         }
                         break;
                     

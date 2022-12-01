@@ -99,6 +99,17 @@ namespace Application_Fusion260
             TraverseFeatureNodes(rootNode, "", featureList);
             return featureList;
         }
-        
+
+        /* Method which go through the Feature Manager
+         * and put all the Feature in a list
+         */
+
+        public FeatureManager GetFeatureManager()
+        {
+
+            
+            return swFeatureManager;
+        }
+
     }
 }
