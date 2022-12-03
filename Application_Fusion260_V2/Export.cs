@@ -32,15 +32,12 @@ namespace Application_Fusion260
         /*
          * Attributes
          */
-        List<Hole> list_Hole;
+
 
         /*
         * Constructor
         */
-        public Export(List<Hole> list_Hole)
-        {
-            this.list_Hole = list_Hole;
-        }
+        public Export(){}
 
         /*
          * Assessors
@@ -63,16 +60,18 @@ namespace Application_Fusion260
             };
         }
 
-        public void write_csv(string csv_name)
+        
+        public void write_csv(List<Hole> list_Hole_specific, string csv_name)
         {
-            using (var writer = new StreamWriter(csv_name+".csv"))
+            using (var writer = new StreamWriter(csv_name + ".csv"))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.WriteRecords(this.list_Hole);
+                csv.WriteRecords(list_Hole_specific);
             }
         }
+        
 
-        public void write_csv(List<Hole> list_Hole_specific, string csv_name)
+        public void write_csv(List<HoleExport> list_Hole_specific, string csv_name)
         {
             using (var writer = new StreamWriter(csv_name + ".csv"))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))

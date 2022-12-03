@@ -69,16 +69,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Holes\advanceHole.cs" />
+    <Compile Include="Holes\AdvanceHole.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="Holes\conicalHole.cs" />
+    <Compile Include="Holes\ConicalHole.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Feature_Explorer.cs" />
     <Compile Include="Holes\Hole.cs" />
+    <Compile Include="Holes\HoleExport.cs" />
+    <Compile Include="Holes\HoleWizard\WizardHole_CounterBore.cs" />
+    <Compile Include="Holes\HoleWizard\WizardHole_CounterSink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Holes\simpleHole.cs" />
+    <Compile Include="Holes\SimpleHole.cs" />
     <Compile Include="SolidWorksWrapper.cs" />
-    <Compile Include="Holes\wizardHole.cs" />
+    <Compile Include="Holes\HoleWizard\WizardHole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

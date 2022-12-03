@@ -22,7 +22,14 @@ namespace hole_namespace
         }
         public override List<string> extractCharacteristicHole()
         {
-            throw new NotImplementedException();
+            List<string> list_properties = new List<string>();
+
+            list_properties.Add((this.id).ToString()); // 0
+            list_properties.Add(this.functionHoleCreation); // 1
+            list_properties.Add((this.diameter).ToString()); // 2
+            list_properties.Add((this.depth).ToString()); // 3
+
+            return list_properties;
         }
     }
 }

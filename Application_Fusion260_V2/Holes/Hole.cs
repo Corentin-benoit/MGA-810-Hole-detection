@@ -29,37 +29,26 @@ namespace hole_namespace
          * Assessors
          */
 
-        [Name("Hole Depth")]
-        [Index(3)]
         public double ass_depth 
         {
             get { return this.depth; }
             set { this.depth = value; }
         }
-        [Name("Hole Diameter")]
-        [Index(2)]
         public double ass_diameter
         {
             get { return this.diameter; }
             set { this.diameter = value; }
         }
-        [Name("Hole Id")]
-        [Index(0)]
-        public int ass_d
+        public int ass_id
         {
             get { return this.id; }
             set { this.id = value; }
         }
-        [Name("Name tree function")]
-        [Index(1)]
-        public string ass_unctionHoleCreation
+        public string ass_functionHoleCreation
         {
             get { return this.functionHoleCreation; }
             set { this.functionHoleCreation = value; }
         }
-        [Name("Norm")]
-        [Index(4)]
-        public string norme{ get; set; }
         /*
          * Methods
          */

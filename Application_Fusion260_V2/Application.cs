@@ -26,66 +26,48 @@ using System.IO;
 using Application_Fusion260_V2;
 using namespace_Feature_Explorer;
 using Application_Fusion260;
+using static System.Net.Mime.MediaTypeNames;
 
-
-/*
- * Utile types
- * WizardHoleFeatureData2
- * SimpleHoleFeatureData2
- * AdvancedHole2
- * MirrorPartFeatureData
- * 
- * 
- * 
- * ExtrudeFeatureData2
- * FeatureCut3
- * 
- * Methode intéressante :
- * SelectByID2
- * 
- * 
- */
 
 namespace Application_Fusion260_V2
 {
     internal class Application
     {
-        //Variable globales à modifier en fonction de l'entrée utilisateur
+
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* -------------------------------------------GLOBAL VARIABLES------------------------------------------------------ 
+* -----------------------------------------------------------------------------------------------------------------
+*/
+        //Global variable to be modified according to user input
         public static float MIN_DEPTH = 0.0f;
         public static float MAX_DEPTH = 1000.0f;
         public static float MIN_RADIUS = 0.5f;
         public static float MAX_RADIUS = 500.0f;
 
-        static public DispatchWrapper[] ObjectArrayToDispatchWrapperArray(object[] Objects)
-        {
-            int ArraySize = 0;
-            ArraySize = Objects.GetUpperBound(0);
-            DispatchWrapper[] d = new DispatchWrapper[ArraySize + 1];
-            int ArrayIndex = 0;
-            for (ArrayIndex = 0; ArrayIndex <= ArraySize; ArrayIndex++)
-            {
-                ;
-                d[ArrayIndex] = new DispatchWrapper(Objects[ArrayIndex]);
-            }
-            return d;
-        }
-
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* ---------------------------------------------------MAIN---------------------------------------------------------- 
+* -----------------------------------------------------------------------------------------------------------------
+*/
         static void Main(string[] args)
         {
-            /*
-             * INITIALISATION 
-             */
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* -------------------------------------------INITIALISATION-------------------------------------------------------- 
+* -----------------------------------------------------------------------------------------------------------------
+*/
+            // Model Solidworks
             ModelDoc2 swDoc;
-            // SolidWorks application connection
             SolidWorksWrapper swAppCalls = new SolidWorksWrapper();
+
+            //Part SolidWorks
             swDoc = (ModelDoc2)swAppCalls.GetPart();
             Feature_Explorer myFeatureExplorer = new Feature_Explorer(swDoc);
 
-            List<TreeControlItem> featureList;
             Object[] f_list;
             //List<WizardHoleFeatureData2> list_HoleWizard = new List<WizardHoleFeatureData2>();
             List<Hole> list_Hole = new List<Hole>();
-            List<WizardHole> list_Hole_wizard = new List<WizardHole>();
 
             f_list = (Object[])myFeatureExplorer.getListFeature();
 
@@ -93,52 +75,54 @@ namespace Application_Fusion260_V2
             string functionHoleCreation = "";
             List<Face2> holeFaces;
 
-           
-            /*
-             * END INITIALISATION
-             */
-            /* 
-             * FOR CONNECTION
-             */
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* -----------------------------------------------CONNECTION-------------------------------------------------------- 
+* -----------------------------------------------------------------------------------------------------------------
+*/
 
             if (intitialisation(ref swAppCalls) == true) // solidworks' connection 
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 return;
             }
-            /*
-             * END FOR CONNECTION
-             */
 
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* ----------------------------------------DISPLAY FEATURES NAMES--------------------------------------------------- 
+* -----------------------------------------------------------------------------------------------------------------
+*/
+            /*
+            List<TreeControlItem> featureList;
+            displayFeaturesNames(List < TreeControlItem > featureList, Feature_Explorer myFeatureExplorer)
+            */
+
+
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* --------------------------------------------GET HOLES FEATURES--------------------------------------------------- 
+* -----------------------------------------------------------------------------------------------------------------
+*/
             //Browse inside FeatureManager
             foreach (Feature feature in f_list){
-                //Console.Write("GetDefinition() :" + f.GetDefinition() + "\n");
-                //Console.Write("GetTypeName2 :" + f.GetTypeName2() + "\n");
-                /*
-                Console.Write("GetTypeName :" + feature.GetTypeName2() + "\n");
-                if(feature.GetTypeName2() == "ICE")
-                {
-                    Console.Write("GetTypeName ICE:" + feature.GetTypeName() + "\n");
-                }
-                */
-                
+                //We search inside the tree with the Solidworks name of each function
                 switch (feature.GetTypeName2())
                 {
                     /*
-                     * HOLE WIZARDS
+                     * ---------------------------------------
+                     * ----------HOLE WIZARDS-----------------
+                     * ---------------------------------------
                      */
-                    
                     case "HoleWzd":
                         if (feature != null)
-                        {
-                            //We collect data
+                        {//We collect data
                             id = feature.GetID();
                             Console.Write("Vérification id =" + id + "\n");
 
                             functionHoleCreation = feature.GetTypeName();
                             Console.Write("Vérification name function =" + functionHoleCreation + "\n");
 
-                           
+
                             holeFaces = new List<Face2>();
                             Object[] tab_Faces_HW;
                             tab_Faces_HW = feature.GetFaces();
@@ -150,112 +134,106 @@ namespace Application_Fusion260_V2
                                 }
                                 WizardHoleFeatureData2 hw = (WizardHoleFeatureData2)feature.GetDefinition();
 
-                                //hw.GetType().GetProperty(
-                                Console.Write("Vhole wizard fastenerSize =" + hw.FastenerSize + "\n");
-                                Console.Write("Vhole wizard FastenerType2 =" + hw.FastenerType2 + "\n");
+                                                            
 
-                                Console.Write("Vhole wizard CounterBoreDepth =" + hw.CounterBoreDepth + "\n");
-                                Console.Write("Vhole wizard CounterBoreDiameter =" + hw.CounterBoreDiameter + "\n");
+                                switch (hw.FastenerType2)
+                                {
+                                    case 135: // cas counterbore
+                                        WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(id, functionHoleCreation, holeFaces, hw.Standard2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize, hw.Depth, hw.FastenerType2);
+                                        list_Hole.Add(myCounterBore);
+                                        break;
+                                    case 141: // cas counterbore
+                                        WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(id, functionHoleCreation, holeFaces, hw.Standard2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize, hw.Depth, hw.FastenerType2);
+                                        list_Hole.Add(myCounterSink);
+                                        break;
 
-                                
-                                Console.Write("Vhole wizard MajorDiameter =" + hw.MajorDiameter + "\n");
-                                Console.Write("Vhole wizard MinorDiameter =" + hw.MinorDiameter + "\n");
-                                Console.Write("Vhole wizard MidCounterSinkDiameter =" + hw.MidCounterSinkDiameter + "\n");
-                                Console.Write("Vhole wizard FarCounterSinkDiameter =" + hw.FarCounterSinkDiameter + "\n");
-                                Console.Write("Vhole wizard NearCounterSinkDiameter =" + hw.NearCounterSinkDiameter + "\n");
-                                Console.Write("Vhole wizard TapDrillDiameter =" + hw.TapDrillDiameter + "\n");
-                                Console.Write("Vhole wizard ThreadDiameter =" + hw.ThreadDiameter + "\n");
-                                Console.Write("Vhole wizard ThruHoleDiameter =" + hw.ThruHoleDiameter + "\n");
-                                Console.Write("Vhole wizard ThruTapDrillDiameter =" + hw.ThruTapDrillDiameter + "\n");
-
-                                Console.Write("Vhole wizard ThruTapDrillDiameter =" + hw.Standard2 + "\n");
-
-                                Console.Write( "\n");
-                                
-
-                                    
-                                Console.Write("Hole Wizard's Standard: " + Enum.GetName(typeof(swWzdHoleStandards_e),hw.Standard2) + "\n");
-                                Console.Write("Hole Wizard's FastenerType2: " + Enum.GetName(typeof(swWzdHoleStandardFastenerTypes_e), hw.FastenerType2) + "\n");
+                                }
 
 
-
-
-                                Console.Write("Vhole wizard CounterDrillDepth =" + hw.CounterDrillDepth + "\n");
-                                Console.Write("Vhole wizard CounterDrillDiameter =" + hw.CounterDrillDiameter + "\n");
-
-                                Console.Write("Vhole wizard CounterSinkDiameter =" + hw.CounterSinkDiameter + "\n");
-                                Console.Write("Vhole wizard CounterSinkDiameter =" + hw.CounterSinkDiameter + "\n");
-
-                                Console.Write("Vhole wizard Depth =" + hw.HoleDepth + "\n"); // if equals to 0, it means that the hole is through hole
-
-                                Console.Write("Vhole wizard HeadClearance =" + hw.HeadClearance + "\n");
-                                Console.Write("Vhole wizard HeadClearanceType =" + hw.HeadClearanceType + "\n");
-
-                                
-                                
-
-                                WizardHole holewizard = new WizardHole(id, functionHoleCreation, holeFaces);
-
-                                //We save the object inside the list 
-                                list_Hole.Add(holewizard);
-                                list_Hole_wizard.Add(holewizard);
-
-                                /*
-                                 * Advanced Holes 
-                                 */
                             }
                         }
-                    
                         break;
+                    /*
+                    * ---------------------------------------
+                    * ----------ADVANCES HOLES---------------
+                    * ---------------------------------------
+                    */
                     case "AdvHoleWzd":
                         if (feature != null)
                         {
-                            
+                            holeFaces = new List<Face2>();
+                            Object[] tab_Faces_ADV_Hole;
+                            tab_Faces_ADV_Hole = feature.GetFaces();
+                            if (tab_Faces_ADV_Hole != null)
+                            {
+                                foreach (Face2 face in tab_Faces_ADV_Hole)
+                                {
+                                    holeFaces.Add(face);
+                                }
+                            }
+
+                            List<AdvancedHoleElementData> list_farSideEl = new List<AdvancedHoleElementData>();
+                            List<AdvancedHoleElementData> list_nearSideEl = new List<AdvancedHoleElementData>();
+
                             AdvancedHoleFeatureData featdata = feature as AdvancedHoleFeatureData;
                             object[] nearSide = null; // tableaux qui récupèrent les near et far éléments qui composent le perçage 
                             object[] farSide = null;
 
-                            CountersinkElementData swCounterSinkNear = default(CountersinkElementData);
-                            CounterboreElementData swCounterBoreFar = default(CounterboreElementData);
-                            StraightElementData swStraightHoleFar = default(StraightElementData);
-                            
                             featdata = (AdvancedHoleFeatureData)feature.GetDefinition(); // on précise que nous avons affaire a un AdvancedHoleFeatureData
                             featdata.AccessSelections(swDoc, null); // on accède à l'endroit de l'arbre où on crée le perçage
                             Console.Write("Number of near side hole elements: " + featdata.NearSideElementsCount + "\n"); // on affiche le nombre de near et far side éléments qui composent le perçage
                             Console.Write("Number of far side hole elements: " + featdata.FarSideElementsCount + "\n");
-                            
-                            nearSide = (object[])featdata.GetNearSideElements(); // on les stock dans les tableaux
-                     
-                            swCounterSinkNear = (CountersinkElementData)nearSide[0];
-                            farSide = (object[])featdata.GetFarSideElements();
 
-                            foreach (AdvancedHoleElementData farSideElements in farSide) { // on parcours ces tableaux pour connaitre les types des éléments
-
-                                
-                                Console.Write("farSideElements Standard: " + Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), farSideElements.ElementType) + "\n");
-                                Console.Write("farSideElements size:"+ farSideElements.Size  + "\n");
+                            if (featdata.FarSideElementsCount != 0)
+                            {
+                                farSide = (object[])featdata.GetFarSideElements();
+                                nearSide = (object[])featdata.GetNearSideElements(); // on les stock dans les tableaux
+                                foreach (object o in farSide)
+                                {
+                                    list_farSideEl.Add((AdvancedHoleElementData)o);
+                                }
+                                foreach (object o in nearSide)
+                                {
+                                    list_nearSideEl.Add((AdvancedHoleElementData)o);
+                                }
+                                AdvanceHole myAdvanceHole = new AdvanceHole(feature.GetID(), feature.GetTypeName(), holeFaces, list_farSideEl, list_nearSideEl);
+                                list_Hole.Add(myAdvanceHole);
+                                myAdvanceHole.printData();
                             }
-                            swCounterBoreFar = (CounterboreElementData)farSide[0];
-                            swStraightHoleFar = (StraightElementData)farSide[1];
+                            else
+                            {
+                                nearSide = (object[])featdata.GetNearSideElements(); // on les stock dans les tableaux
+                                foreach (object o in nearSide)
+                                {
+                                    list_nearSideEl.Add((AdvancedHoleElementData)o);
+                                }
+                                AdvanceHole myAdvanceHole = new AdvanceHole(feature.GetID(), feature.GetTypeName(), holeFaces, list_nearSideEl);
+                                list_Hole.Add(myAdvanceHole);
+                            }
 
 
-                            Console.Write("Near side countersink: \n" );
 
-                            Console.Write("   Hole element type as defined in swAdvWzdGeneralHoleTypes_e: " + ((AdvancedHoleElementData)swCounterSinkNear).ElementType + "\n");
-                            Console.Write("   Size as defined on the Advanced Hole PropertyManager page: " + ((AdvancedHoleElementData)swCounterSinkNear).Size + "\n");
-                            Console.Write("   Standard as defined in swWzdHoleStandards_e: " + ((AdvancedHoleElementData)swCounterSinkNear).Standard + "\n");
-                           
+
+
+
+                            featdata.ReleaseSelectionAccess();
+
+
 
 
                         }
                         break;
-                    
+                    /*
+                     * ---------------------------------------
+                     * -----------SIMPLE HOLE-----------------
+                     * ---------------------------------------
+                     */
                     case "SketchHole":
                         if (feature != null)
                         {
                             SimpleHoleFeatureData2 sh = (SimpleHoleFeatureData2)feature.GetDefinition();
                             id = feature.GetID();
-                            functionHoleCreation = feature.GetTypeName();
+                            functionHoleCreation = feature.GetTypeName2();
                             holeFaces = new List<Face2>();
                             Object[] tab_Faces_SH;
                             tab_Faces_SH = feature.GetFaces();
@@ -272,6 +250,11 @@ namespace Application_Fusion260_V2
                             }
                         }
                         break;
+                    /*
+                     * ---------------------------------------
+                     * -----------EXTRUSION-------------------
+                     * ---------------------------------------
+                     */
                     //To get the underlying type of feature of an Instant3D feature (i.e., "ICE"), call IFeature::GetTypeName; otherwise, call this GetTypeName. 
                     case "ICE":
                         switch (feature.GetTypeName())
@@ -285,45 +268,112 @@ namespace Application_Fusion260_V2
                                 {
                                     ExtrudeFeatureData2 cutHole = (ExtrudeFeatureData2)feature.GetDefinition();
                                 }
-                                
-
-
                                 //Console.Write("Vérification id adv =" + cutHole. + "\n");
                                 break;
                             default:
                                 // code block
                             break;
-
                         }
                         break;
+                    /*
+                     * ---------------------------------------
+                     * --------------OTHERS-------------------
+                     * ---------------------------------------
+                     */
                     default:
                         // code block
                         break;
                 }
             }
+
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* ---------------------------------------------COLOR HOLES FACES--------------------------------------------------- 
+* -----------------------------------------------------------------------------------------------------------------
+*/
             colorHoles(swDoc, list_Hole);
 
-            /*
-             * CSV EXPORT
-             */
-            /*
-            using (var writer = new StreamWriter("Hole.csv"))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* -------------------------------------------------CSV EXPORT------------------------------------------------------ 
+* -----------------------------------------------------------------------------------------------------------------
+*/          
+            List<HoleExport> list_holes_for_csv = new List<HoleExport>();
+            foreach(Hole hole in list_Hole)
             {
-                csv.WriteRecords(list_Hole);
-            }
-            */
-            Export exporter = new Export(list_Hole);
-            exporter.write_csv("test_holes");
+                HoleExport hole_for_csv = new HoleExport();
+                List<string> listCharacteristics = new List<string>();
+                switch (hole.ass_functionHoleCreation)
+                {
+                    case "HoleWzd":
+                        listCharacteristics = hole.extractCharacteristicHole();
+                        if (listCharacteristics[0] == "135") // case counterbore
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Counter Bore";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_counterBoreDepth = listCharacteristics[6];
+                            hole_for_csv.ass_counterBoreDiameter = listCharacteristics[7];                            
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[8];                           
+                            
 
-            Thread.Sleep(1000000);
+                        }
+                        else if(listCharacteristics[0] == "141") // case countersink
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Counter Sink";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_counterSinkDiameter = listCharacteristics[6];
+                            hole_for_csv.ass_counterSinkAngle = listCharacteristics[7];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[8];
+                        }
+                        else
+                        {
+
+                        }
+                        list_holes_for_csv.Add(hole_for_csv);
+                        break;
+
+                    case "AdvHoleWzd":
+
+                    break;
+
+                    case "SketchHole":
+                        listCharacteristics = hole.extractCharacteristicHole();
+
+                        hole_for_csv.ass_id = listCharacteristics[0];
+                        hole_for_csv.ass_functionHoleCreation = "Simple Hole";
+                        hole_for_csv.ass_diameter = listCharacteristics[2];
+                        hole_for_csv.ass_depth = listCharacteristics[3];
+    
+                        list_holes_for_csv.Add(hole_for_csv);
+                        break;
+
+                    default: break;
+                }
+            }
+
+
+            Export exporter = new Export();
+            exporter.write_csv(list_holes_for_csv, "test_holes");
+
+            Thread.Sleep(10);
         }
 
 
-        /*
-         * Method to initialise our code and connect to SolidWorks
-         */
+/*
+* -----------------------------------------------------------------------------------------------------------------
+* ----------------------------------------------------METHODS------------------------------------------------------ 
+* -----------------------------------------------------------------------------------------------------------------
+*/
 
+        /*
+         * Methods which can initialize the project
+         */
         public static bool intitialisation(ref SolidWorksWrapper swAppCalls)
         {
             if (swAppCalls.AppReference == null)
@@ -346,6 +396,10 @@ namespace Application_Fusion260_V2
             }
             return false;
         }
+
+        /*
+         * Method for color a specific faces
+         */
 
         public static void color(ModelDoc2 swDoc, string color, Face2 swFace)
         {
@@ -388,6 +442,9 @@ namespace Application_Fusion260_V2
             swFace.MaterialPropertyValues = colorInfo;
         }
 
+        /*
+         * Method for display all the features names in the tree
+         */
         public static void displayFeaturesNames(List<TreeControlItem> featureList, Feature_Explorer myFeatureExplorer)
         {
             // Retreive number of features
@@ -396,10 +453,13 @@ namespace Application_Fusion260_V2
             featureList = myFeatureExplorer.TraverseFeatureManager();
             foreach (TreeControlItem feature in featureList)
             { // traverse the Feature List and print the name
-                //Console.Write(feature.Text + "\n");
+                Console.Write(feature.Text + "\n");
             }
         }
 
+        /*
+         * Method for color holes
+         */
         public static void colorHoles(ModelDoc2 swDoc, List<Hole> list_Hole)
         {
             foreach (Hole hole in list_Hole)
@@ -413,6 +473,20 @@ namespace Application_Fusion260_V2
                     hole.colorHole(swDoc, "red");
                 }
             }
+        }
+
+        static public DispatchWrapper[] ObjectArrayToDispatchWrapperArray(object[] Objects)
+        {
+            int ArraySize = 0;
+            ArraySize = Objects.GetUpperBound(0);
+            DispatchWrapper[] d = new DispatchWrapper[ArraySize + 1];
+            int ArrayIndex = 0;
+            for (ArrayIndex = 0; ArrayIndex <= ArraySize; ArrayIndex++)
+            {
+                ;
+                d[ArrayIndex] = new DispatchWrapper(Objects[ArrayIndex]);
+            }
+            return d;
         }
 
         //Meters to millimeters 
