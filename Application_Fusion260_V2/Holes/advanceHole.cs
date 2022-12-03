@@ -65,8 +65,6 @@ namespace hole_namespace
             foreach (AdvancedHoleElementData nsElements in nearSideElements)
             { // on parcours ces tableaux pour connaitre les types des éléments
 
-
-
                 this.holesSize.Add(nsElements.Size);
                 this.holesType.Add(Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), nsElements.ElementType));
 
@@ -95,10 +93,6 @@ namespace hole_namespace
 
 
         }
-
-        /*
-         * Assessors
-         */
 
         
     }

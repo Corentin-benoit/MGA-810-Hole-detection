@@ -54,7 +54,17 @@ namespace hole_namespace
         public string ass_depth
         {
             get { return this.depth; }
-            set { this.depth = value; }
+            set 
+            { 
+                if(value == "0")
+                {
+                    this.depth = "Opening";
+                }
+                else
+                {
+                    this.depth = value;
+                }
+            }
         }
         [Name("Norm")]
         [Index(4)]

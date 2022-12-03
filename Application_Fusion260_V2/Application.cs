@@ -361,7 +361,7 @@ namespace Application_Fusion260_V2
             Export exporter = new Export();
             exporter.write_csv(list_holes_for_csv, "test_holes");
 
-            Thread.Sleep(10);
+            Thread.Sleep(100000);
         }
 
 
