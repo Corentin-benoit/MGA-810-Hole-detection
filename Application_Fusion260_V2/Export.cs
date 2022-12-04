@@ -28,12 +28,11 @@ namespace Application_Fusion260
 {
     internal class Export
     {
-
+        public static int nb_adv_element = 0;
         /*
          * Attributes
          */
-
-
+        private int export_nb_adv_element=0;
         /*
         * Constructor
         */
@@ -42,8 +41,11 @@ namespace Application_Fusion260
         /*
          * Assessors
          */
-
-
+        public int ass_nb_adv_element
+        {
+            get { return this.export_nb_adv_element; }
+            set { this.export_nb_adv_element = value; }
+        }
         /*
          * Methods
          */
@@ -66,21 +68,70 @@ namespace Application_Fusion260
             using (var writer = new StreamWriter(csv_name + ".csv"))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
+                nb_adv_element = this.ass_nb_adv_element;
+                csv.Context.RegisterClassMap<HoleMap>(); // to display header names and index
                 csv.WriteRecords(list_Hole_specific);
             }
         }
-        
 
         public void write_csv(List<HoleExport> list_Hole_specific, string csv_name)
         {
             using (var writer = new StreamWriter(csv_name + ".csv"))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
+                nb_adv_element = this.ass_nb_adv_element;
+                csv.Context.RegisterClassMap<HoleMap>();// to display header names and index
                 csv.WriteRecords(list_Hole_specific);
             }
         }
 
-
+        // to display header names and index
+        public sealed class HoleMap : ClassMap<HoleExport>
+        {
+            public HoleMap()
+            {
+                int cpt = 0;
+                Map(m => m.ass_id).Index(cpt);
+                Map(m => m.ass_id).Name("Hole Id");
+                cpt++;
+                Map(m => m.ass_functionHoleCreation).Index(cpt);
+                Map(m => m.ass_functionHoleCreation).Name("Name tree function");
+                cpt++;
+                Map(m => m.ass_diameter).Index(cpt);
+                Map(m => m.ass_diameter).Name("Hole Diameter");
+                cpt++;
+                Map(m => m.ass_depth).Index(cpt);
+                Map(m => m.ass_depth).Name("Hole Depth");
+                cpt++;
+                Map(m => m.ass_norm).Index(cpt);
+                Map(m => m.ass_norm).Name("Norm");
+                cpt++;
+                Map(m => m.ass_fastenerSize).Index(cpt);
+                Map(m => m.ass_fastenerSize).Name("FastenerSize");
+                cpt++;
+                Map(m => m.ass_counterSinkDiameter).Index(cpt);
+                Map(m => m.ass_counterSinkDiameter).Name("Counter Sink Diameter");
+                cpt++;
+                Map(m => m.ass_counterSinkAngle).Index(cpt);
+                Map(m => m.ass_counterSinkAngle).Name("Counter Sink Angle");
+                cpt++;
+                Map(m => m.ass_counterBoreDiameter).Index(cpt);
+                Map(m => m.ass_counterBoreDiameter).Name("Counter Bode Diameter");
+                cpt++;
+                Map(m => m.ass_counterBoreDepth).Index(cpt);
+                Map(m => m.ass_counterBoreDepth).Name("Counter Bore Depth");
+                cpt++;
+                if(nb_adv_element != 0)
+                {
+                    Map(m => m.ass_adv_size_element).Index(cpt);
+                    Map(m => m.ass_adv_size_element).Name((string)("Adavanced size element "));
+                    cpt++;
+                    Map(m => m.ass_adv_type_element).Index(cpt);
+                    Map(m => m.ass_adv_type_element).Name((string)("Adavanced type element "));
+                    cpt++;
+                }
+            }
+        }
 
         /*
         public static CsvConfiguration GetwizardHoleConfiguration<T>(IEnumerable<T> records) where T : WizardHole

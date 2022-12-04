@@ -23,34 +23,37 @@ namespace hole_namespace
         protected string fastenerSize = "NaN";
         protected string counterBoreDiameter = "NaN";
         protected string counterBoreDepth = "NaN";
+        protected string adv_type_element = "NaN";
+        protected string adv_size_element = "NaN";
 
         /*
          * Assessors
          */
+        const int cpt = 0;
 
-        [Name("Hole Id")]
-        [Index(0)]
+        //[Name("Hole Id")]
+        //[Index(0)]
         public string ass_id
         {
             get { return this.id; }
             set { this.id = value; }
         }
-        [Name("Name tree function")]
-        [Index(1)]
+        //[Name("Name tree function")]
+        //[Index(1)]
         public string ass_functionHoleCreation
         {
             get { return this.functionHoleCreation; }
             set { this.functionHoleCreation = value; }
         }
-        [Name("Hole Diameter")]
-        [Index(2)]
+        //[Name("Hole Diameter")]
+        //[Index(2)]
         public string ass_diameter
         {
             get { return this.diameter; }
             set { this.diameter = value; }
         }
-        [Name("Hole Depth")]
-        [Index(3)]
+        //[Name("Hole Depth")]
+        //[Index(3)]
         public string ass_depth
         {
             get { return this.depth; }
@@ -66,47 +69,57 @@ namespace hole_namespace
                 }
             }
         }
-        [Name("Norm")]
-        [Index(4)]
+        //[Name("Norm")]
+        //[Index(4)]
         public string ass_norm
         {
             get { return this.norm; }
             set { this.norm = value; }
         }
-        [Name("FastenerSize")]
-        [Index(5)]
+        //[Name("FastenerSize")]
+        //[Index(5)]
         public string ass_fastenerSize
         {
             get { return this.fastenerSize; }
             set { this.fastenerSize = value; }
         }
-        [Name("Counter Sink Diameter")]
-        [Index(6)]
+        //[Name("Counter Sink Diameter")]
+        //[Index(6)]
         public string ass_counterSinkDiameter
         {
             get { return this.counterSinkDiameter; }
             set { this.counterSinkDiameter = value; }
         }
-        [Name("Counter Sink Angle")]
-        [Index(7)]
+        //[Name("Counter Sink Angle")]
+        //[Index(7)]
         public string ass_counterSinkAngle
         {
             get { return this.counterSinkAngle; }
             set { this.counterSinkAngle = value; }
         }
-        [Name("Counter Bode Diameter")]
-        [Index(8)]
+        //[Name("Counter Bode Diameter")]
+        //[Index(8)]
         public string ass_counterBoreDiameter
         {
             get { return this.counterBoreDiameter; }
             set { this.counterBoreDiameter = value; }
         }
-        [Name("Counter Bore Depth")]
-        [Index(9)]
+        //[Name("Counter Bore Depth")]
+        //[Index(9)]
         public string ass_counterBoreDepth
         {
             get { return this.counterBoreDepth; }
             set { this.counterBoreDepth= value; }
+        }
+        public string ass_adv_size_element
+        {
+            get { return this.adv_size_element; }
+            set { this.adv_size_element = value; }
+        }
+        public string ass_adv_type_element
+        {
+            get { return this.adv_type_element; }
+            set { this.adv_type_element = value; }
         }
         /*
          * Methods

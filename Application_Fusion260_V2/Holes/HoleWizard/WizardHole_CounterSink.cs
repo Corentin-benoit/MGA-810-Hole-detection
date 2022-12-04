@@ -16,7 +16,7 @@ namespace hole_namespace
         protected double counterSinkDiameter;
         protected double counterSinkAngle;
         protected string fastenerSize;
-        protected int fastenerType;
+        protected new int fastenerType; //Ajout d'un new à vérifier
         
 
         /*

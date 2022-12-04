@@ -39,7 +39,7 @@ namespace hole_namespace
                 Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), nsElements.ElementType);
             }
             foreach (AdvancedHoleElementData fsElements in farSideElements)
-            { // on parcours ces tableaux pour connaitre les types des éléments
+            { // on parcours ces tableaux pour connaitre les tailles des éléments
 
 
 
@@ -89,9 +89,25 @@ namespace hole_namespace
 
         public override List<string> extractCharacteristicHole()
         {
-            throw new NotImplementedException();
+            int cpt = 0;
+            List<string> list_properties = new List<string>();
+
+            list_properties.Add((this.id).ToString()); // 0
+            list_properties.Add(this.functionHoleCreation); // 1
+            list_properties.Add((this.diameter).ToString()); // 2
+            list_properties.Add((this.depth).ToString()); // 3
+
+            // 4 and +
+            foreach(String size in this.holesSize)
+            {
+                list_properties.Add((size).ToString()); //even
+                list_properties.Add(((this.holesType)[cpt]).ToString()); //odd
+                cpt++;
+            }
+            
 
 
+            return list_properties;
         }
 
         

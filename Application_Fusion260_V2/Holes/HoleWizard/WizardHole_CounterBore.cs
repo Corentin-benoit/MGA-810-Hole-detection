@@ -19,7 +19,7 @@ namespace hole_namespace
         protected double counterBoreDepth;
         protected double counterBoreDiameter;
         protected string fastenerSize;
-        protected int fastenerType;
+        protected new int fastenerType; //Rajout d'un new à vérifier
       
 
 

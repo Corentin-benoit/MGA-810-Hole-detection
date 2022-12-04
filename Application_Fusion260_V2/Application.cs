@@ -75,6 +75,8 @@ namespace Application_Fusion260_V2
             string functionHoleCreation = "";
             List<Face2> holeFaces;
 
+
+
 /*
 * -----------------------------------------------------------------------------------------------------------------
 * -----------------------------------------------CONNECTION-------------------------------------------------------- 
@@ -299,10 +301,15 @@ namespace Application_Fusion260_V2
 * -----------------------------------------------------------------------------------------------------------------
 */          
             List<HoleExport> list_holes_for_csv = new List<HoleExport>();
-            foreach(Hole hole in list_Hole)
+            int cpt_adv_max = 0;
+            int cpt_adv = 0;
+            foreach (Hole hole in list_Hole)
             {
+                cpt_adv = 0;
                 HoleExport hole_for_csv = new HoleExport();
-                List<string> listCharacteristics = new List<string>();
+                //List<string> listCharacteristics = new List<string>();
+                _ = new List<string>();
+                List<string> listCharacteristics;
                 switch (hole.ass_functionHoleCreation)
                 {
                     case "HoleWzd":
@@ -315,12 +322,12 @@ namespace Application_Fusion260_V2
                             hole_for_csv.ass_depth = listCharacteristics[4];
                             hole_for_csv.ass_norm = listCharacteristics[5];
                             hole_for_csv.ass_counterBoreDepth = listCharacteristics[6];
-                            hole_for_csv.ass_counterBoreDiameter = listCharacteristics[7];                            
-                            hole_for_csv.ass_fastenerSize = listCharacteristics[8];                           
-                            
+                            hole_for_csv.ass_counterBoreDiameter = listCharacteristics[7];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[8];
+
 
                         }
-                        else if(listCharacteristics[0] == "141") // case countersink
+                        else if (listCharacteristics[0] == "141") // case countersink
                         {
                             hole_for_csv.ass_id = listCharacteristics[1];
                             hole_for_csv.ass_functionHoleCreation = "Hole Wizard Counter Sink";
@@ -339,8 +346,25 @@ namespace Application_Fusion260_V2
                         break;
 
                     case "AdvHoleWzd":
+                        listCharacteristics = hole.extractCharacteristicHole();
 
-                    break;
+                        //Begin after 4 to retreive nearSideElements and farSideElements
+                        //Step = 2, fot type and size
+                        int i;
+                        for (i = 4; i < listCharacteristics.Count; i = i + 2)
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[0];
+                            hole_for_csv.ass_functionHoleCreation = "Advanced Hole";
+                            hole_for_csv.ass_diameter = listCharacteristics[2];
+                            hole_for_csv.ass_depth = listCharacteristics[3];
+                            hole_for_csv.ass_adv_size_element = listCharacteristics[i];
+                            hole_for_csv.ass_adv_type_element = listCharacteristics[i + 1];
+                            cpt_adv++;
+
+                            list_holes_for_csv.Add(hole_for_csv);
+                            hole_for_csv = new HoleExport();
+                        }
+                        break;
 
                     case "SketchHole":
                         listCharacteristics = hole.extractCharacteristicHole();
@@ -349,19 +373,23 @@ namespace Application_Fusion260_V2
                         hole_for_csv.ass_functionHoleCreation = "Simple Hole";
                         hole_for_csv.ass_diameter = listCharacteristics[2];
                         hole_for_csv.ass_depth = listCharacteristics[3];
-    
+
                         list_holes_for_csv.Add(hole_for_csv);
                         break;
 
                     default: break;
                 }
+                if (cpt_adv > cpt_adv_max)
+                {
+                    cpt_adv_max = cpt_adv;
+                }
             }
 
-
             Export exporter = new Export();
+            exporter.ass_nb_adv_element = cpt_adv_max;
             exporter.write_csv(list_holes_for_csv, "test_holes");
 
-            Thread.Sleep(100000);
+            Thread.Sleep(100);
         }
 
 
