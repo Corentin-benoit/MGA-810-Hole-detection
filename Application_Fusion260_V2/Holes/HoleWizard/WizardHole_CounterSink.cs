@@ -23,15 +23,15 @@ namespace hole_namespace
          * Constructor
          */
 
-        public WizardHole_CounterSink(int id,
+        public WizardHole_CounterSink(double depth, double diameter, int id,
                                         string functionHoleCreation,
                                         List<Face2> holeFaces,
                                         int norm,
+                                        int fastenerType,
                                         double counterSinkDiameter,
                                         double counterSinkAngle,
-                                        string fastenerSize,
-                                        double depth, int fastenerType)
-                                        : base(id, functionHoleCreation, holeFaces)
+                                        string fastenerSize)
+                                        : base(depth, diameter, id, functionHoleCreation, holeFaces, norm, fastenerType)
         {
             this.counterSinkDiameter = counterSinkDiameter;
             this.counterSinkAngle = counterSinkAngle;

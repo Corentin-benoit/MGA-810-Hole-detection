@@ -20,7 +20,7 @@ namespace hole_namespace
         protected double counterBoreDiameter;
         protected string fastenerSize;
         protected new int fastenerType; //Rajout d'un new à vérifier
-      
+
 
 
 
@@ -28,9 +28,36 @@ namespace hole_namespace
         /*
          * Constructor
          */
+        //double depth, double diameter, int id, string functionHoleCreation, List<Face2> holeFaces, int norm, int fastenerType
+        public WizardHole_CounterBore(  double depth,
+                                        double diameter,
+                                        int id,
+                                        string functionHoleCreation,
+                                        List<Face2> holeFaces,
+                                        int norm,
+                                        int fastenerType,
+                                        double counterBoreDepth,
+                                        double counterBoreDiameter,
+                                        string fastenerSize) 
+                            : base(depth, diameter, id, functionHoleCreation, holeFaces, norm, fastenerType)
+        {
+            this.depth = depth; 
+            this.diameter = diameter;
+            this.id = id;    
+            this.functionHoleCreation = functionHoleCreation;
+            this.holeFaces = holeFaces;
+            this.norm = norm;
+            this.fastenerType = fastenerType;
+            this.counterBoreDepth = counterBoreDepth;
+            this.fastenerSize = fastenerSize;
+            this.counterBoreDiameter = counterBoreDiameter;
+
+        }
+        /*
         public WizardHole_CounterBore(  int id, 
                                         string functionHoleCreation, 
                                         List<Face2> holeFaces,
+                                        double diameter,
                                         int norm,
                                         double counterBoreDepth, 
                                         double counterBoreDiameter, 
@@ -43,9 +70,9 @@ namespace hole_namespace
             this.fastenerSize = fastenerSize;
             this.depth = depth;
             this.fastenerType = fastenerType;
-           
-
+            this.norm = norm;
         }
+        */
         /*
          * Assessors
          */

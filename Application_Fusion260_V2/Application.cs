@@ -125,6 +125,7 @@ namespace Application_Fusion260_V2
                             Console.Write("Vérification name function =" + functionHoleCreation + "\n");
 
 
+
                             holeFaces = new List<Face2>();
                             Object[] tab_Faces_HW;
                             tab_Faces_HW = feature.GetFaces();
@@ -136,17 +137,34 @@ namespace Application_Fusion260_V2
                                 }
                                 WizardHoleFeatureData2 hw = (WizardHoleFeatureData2)feature.GetDefinition();
 
-                                                            
+
+                                Console.Write("Diameter =" + hw.Diameter + "\n");
+                                Console.Write("CounterBoreDiameter =" + hw.CounterBoreDiameter + "\n");
+                                Console.Write("CounterDrillDiameter =" + hw.CounterDrillDiameter + "\n");
+                                Console.Write("Vérification name CounterSinkDiameter =" + hw.CounterSinkDiameter + "\n");
+                                Console.Write("Vérification name FarCounterSinkDiameter =" + hw.FarCounterSinkDiameter + "\n");
+                                Console.Write("Vérification name HoleDiameter =" + hw.HoleDiameter + "\n");
+                                Console.Write("Vérification name MajorDiameter =" + hw.MajorDiameter + "\n");
+                                Console.Write("Vérification name MidCounterSinkDiameter =" + hw.MidCounterSinkDiameter + "\n");
+                                Console.Write("Vérification name NearCounterSinkDiameter =" + hw.NearCounterSinkDiameter + "\n");
+                                Console.Write("Vérification name MinorDiameter =" + hw.MinorDiameter + "\n");
+                                Console.Write("Vérification name ThreadDiameter =" + hw.ThreadDiameter + "\n");
+                                Console.Write("Vérification name ThruHoleDiameter =" + hw.ThruHoleDiameter + "\n");
+                                Console.Write("Vérification name ThruTapDrillDiameter =" + hw.ThruTapDrillDiameter + "\n");
 
                                 switch (hw.FastenerType2)
                                 {
                                     case 135: // cas counterbore
-                                        WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(id, functionHoleCreation, holeFaces, hw.Standard2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize, hw.Depth, hw.FastenerType2);
+                                        //WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(id, functionHoleCreation, holeFaces, hw.Standard2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize, hw.Depth, hw.FastenerType2);
+                                        
+                                        WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(hw.Depth, hw.ThruHoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize);
                                         list_Hole.Add(myCounterBore);
                                         break;
                                     case 141: // cas counterbore
-                                        WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(id, functionHoleCreation, holeFaces, hw.Standard2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize, hw.Depth, hw.FastenerType2);
+                                        WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(hw.Depth, hw.ThruHoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize);
                                         list_Hole.Add(myCounterSink);
+                                        break;
+                                    default:
                                         break;
 
                                 }
@@ -212,17 +230,7 @@ namespace Application_Fusion260_V2
                                 AdvanceHole myAdvanceHole = new AdvanceHole(feature.GetID(), feature.GetTypeName(), holeFaces, list_nearSideEl);
                                 list_Hole.Add(myAdvanceHole);
                             }
-
-
-
-
-
-
                             featdata.ReleaseSelectionAccess();
-
-
-
-
                         }
                         break;
                     /*
