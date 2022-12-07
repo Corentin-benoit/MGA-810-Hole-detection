@@ -1,2 +1,2 @@
 Hole Id,Name tree function,Hole Diameter,Hole Depth,Norm,FastenerSize,Counter Sink Diameter,Counter Sink Angle,Counter Bode Diameter,Counter Bore Depth
-40,Hole Wizard Counter Bore,0.026,Opening,8,M24,NaN,NaN,0.0469772679547305,0.015
+75,Hole Wizard Counter Bore,"0,0055","0,005",8,M5,NaN,NaN,"0,012238","0,0035"

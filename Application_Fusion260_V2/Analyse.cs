@@ -13,6 +13,7 @@ using SwConst;
 using System.Windows;
 using Wrapper;
 using System.Threading;
+using System.Windows.Forms;
 
 //Need to be verify
 using hole_namespace;
@@ -27,11 +28,11 @@ using Application_Fusion260_V2;
 using namespace_Feature_Explorer;
 using Application_Fusion260;
 using static System.Net.Mime.MediaTypeNames;
-
+using Application = System.Windows.Forms.Application;
 
 namespace Application_Fusion260_V2
 {
-    internal class Application
+    internal class Analyse
     {
 
 /*
@@ -40,23 +41,32 @@ namespace Application_Fusion260_V2
 * -----------------------------------------------------------------------------------------------------------------
 */
         //Global variable to be modified according to user input
-        public static float MIN_DEPTH = 0.0f;
+       /* public static float MIN_DEPTH = 0.0f;
         public static float MAX_DEPTH = 1000.0f;
         public static float MIN_RADIUS = 0.5f;
-        public static float MAX_RADIUS = 500.0f;
+        public static float MAX_RADIUS = 500.0f;*/
 
 /*
 * -----------------------------------------------------------------------------------------------------------------
 * ---------------------------------------------------MAIN---------------------------------------------------------- 
 * -----------------------------------------------------------------------------------------------------------------
 */
-        static void Main(string[] args)
+        //static void Main(string[] args)
+        public void run(float MIN_DEPTH, float MAX_DEPTH, float MIN_RADIUS, float MAX_RADIUS)
         {
-/*
-* -----------------------------------------------------------------------------------------------------------------
-* -------------------------------------------INITIALISATION-------------------------------------------------------- 
-* -----------------------------------------------------------------------------------------------------------------
-*/
+            
+            /*
+            * -----------------------------------------------------------------------------------------------------------------
+            * -------------------------------------------INITIALISATION-------------------------------------------------------- 
+            * -----------------------------------------------------------------------------------------------------------------
+            */
+
+            // Interface Utilisateur 
+            //Application.Run(new InterfaceUtilisateur());
+           
+            
+            
+
             // Model Solidworks
             ModelDoc2 swDoc;
             SolidWorksWrapper swAppCalls = new SolidWorksWrapper();
@@ -86,7 +96,8 @@ namespace Application_Fusion260_V2
             if (intitialisation(ref swAppCalls) == true) // solidworks' connection 
             {
                 Thread.Sleep(5000);
-                return;
+                Console.WriteLine("Connection problems");
+                
             }
 
 /*
@@ -137,31 +148,20 @@ namespace Application_Fusion260_V2
                                 }
                                 WizardHoleFeatureData2 hw = (WizardHoleFeatureData2)feature.GetDefinition();
 
+                                double diameter = 0;
 
-                                Console.Write("Diameter =" + hw.Diameter + "\n");
-                                Console.Write("CounterBoreDiameter =" + hw.CounterBoreDiameter + "\n");
-                                Console.Write("CounterDrillDiameter =" + hw.CounterDrillDiameter + "\n");
-                                Console.Write("Vérification name CounterSinkDiameter =" + hw.CounterSinkDiameter + "\n");
-                                Console.Write("Vérification name FarCounterSinkDiameter =" + hw.FarCounterSinkDiameter + "\n");
-                                Console.Write("Vérification name HoleDiameter =" + hw.HoleDiameter + "\n");
-                                Console.Write("Vérification name MajorDiameter =" + hw.MajorDiameter + "\n");
-                                Console.Write("Vérification name MidCounterSinkDiameter =" + hw.MidCounterSinkDiameter + "\n");
-                                Console.Write("Vérification name NearCounterSinkDiameter =" + hw.NearCounterSinkDiameter + "\n");
-                                Console.Write("Vérification name MinorDiameter =" + hw.MinorDiameter + "\n");
-                                Console.Write("Vérification name ThreadDiameter =" + hw.ThreadDiameter + "\n");
-                                Console.Write("Vérification name ThruHoleDiameter =" + hw.ThruHoleDiameter + "\n");
-                                Console.Write("Vérification name ThruTapDrillDiameter =" + hw.ThruTapDrillDiameter + "\n");
-
+                                if (hw.HoleDiameter != 0){ diameter = hw.HoleDiameter; }
+                                else{diameter = hw.ThruHoleDiameter;}
                                 switch (hw.FastenerType2)
                                 {
+
                                     case 135: // cas counterbore
-                                        //WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(id, functionHoleCreation, holeFaces, hw.Standard2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize, hw.Depth, hw.FastenerType2);
-                                        
-                                        WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(hw.Depth, hw.ThruHoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize);
+                                                                              
+                                        WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(hw.HoleDepth, diameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize);
                                         list_Hole.Add(myCounterBore);
                                         break;
                                     case 141: // cas counterbore
-                                        WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(hw.Depth, hw.ThruHoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize);
+                                        WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(hw.HoleDepth, diameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize);
                                         list_Hole.Add(myCounterSink);
                                         break;
                                     default:
@@ -301,7 +301,7 @@ namespace Application_Fusion260_V2
 * ---------------------------------------------COLOR HOLES FACES--------------------------------------------------- 
 * -----------------------------------------------------------------------------------------------------------------
 */
-            colorHoles(swDoc, list_Hole);
+            colorHoles(swDoc, list_Hole, MIN_DEPTH,  MAX_DEPTH,  MIN_RADIUS,  MAX_RADIUS);
 
 /*
 * -----------------------------------------------------------------------------------------------------------------
@@ -396,8 +396,10 @@ namespace Application_Fusion260_V2
             Export exporter = new Export();
             exporter.ass_nb_adv_element = cpt_adv_max;
             exporter.write_csv(list_holes_for_csv, "test_holes");
-
+            SnapShot screeen;
+         
             Thread.Sleep(100);
+          
         }
 
 
@@ -496,10 +498,11 @@ namespace Application_Fusion260_V2
         /*
          * Method for color holes
          */
-        public static void colorHoles(ModelDoc2 swDoc, List<Hole> list_Hole)
+        public static void colorHoles(ModelDoc2 swDoc, List<Hole> list_Hole, float MIN_DEPTH, float MAX_DEPTH, float MIN_RADIUS, float MAX_RADIUS)
         {
             foreach (Hole hole in list_Hole)
             {
+                //Data in mm
                 if(hole.sizeRespected(mmTOm(MIN_DEPTH), mmTOm(MAX_DEPTH), mmTOm(MIN_RADIUS), mmTOm(MAX_RADIUS)) == true)
                 {
                     hole.colorHole(swDoc, "green");
@@ -511,19 +514,7 @@ namespace Application_Fusion260_V2
             }
         }
 
-        static public DispatchWrapper[] ObjectArrayToDispatchWrapperArray(object[] Objects)
-        {
-            int ArraySize = 0;
-            ArraySize = Objects.GetUpperBound(0);
-            DispatchWrapper[] d = new DispatchWrapper[ArraySize + 1];
-            int ArrayIndex = 0;
-            for (ArrayIndex = 0; ArrayIndex <= ArraySize; ArrayIndex++)
-            {
-                ;
-                d[ArrayIndex] = new DispatchWrapper(Objects[ArrayIndex]);
-            }
-            return d;
-        }
+     
 
         //Meters to millimeters 
         public static int mTOmm(int value){ return (value * 1000); }

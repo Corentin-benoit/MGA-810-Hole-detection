@@ -121,15 +121,40 @@ namespace hole_namespace
             double dc = 2*radius;
 
             //Depth test
-            if (lu < min_depth) { return false;}
-            if (lu > max_depth) { return false;}
+            if(max_depth != 0)
+            {
+                if (lu > max_depth) 
+                {
+                    Console.WriteLine("Profondeur max dépassé");
+                    return false;
+                }
+            }
+            if (lu < min_depth)
+            {
+                Console.WriteLine("Profondeur min dépassé");
+                return false;
+            }
+            
 
             //Radius test
-            if (radius < min_radius) { return false;}
-            if (radius > max_radius) { return false;}
+            if (radius < min_radius) 
+            {
+                Console.WriteLine("Rayon min dépassé");
+                return false;
+            }
+            if (radius > max_radius)
+            {
+                Console.WriteLine("Rayon max dépassé");
+                return false;
+            }
 
             //Match test
-            if (lu > 3*dc) { return false;}
+
+            if (lu > 3*dc) 
+            {
+                Console.WriteLine("Vérification LU fausse");
+                return false;
+            }
                         
             return true;
         }

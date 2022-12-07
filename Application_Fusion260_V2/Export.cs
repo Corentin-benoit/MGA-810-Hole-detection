@@ -132,21 +132,5 @@ namespace Application_Fusion260
                 }
             }
         }
-
-        /*
-        public static CsvConfiguration GetwizardHoleConfiguration<T>(IEnumerable<T> records) where T : WizardHole
-        {
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture);
-
-            var classMap = new DefaultClassMap<T>();
-
-            classMap.AutoMap(CultureInfo.InvariantCulture);
-            classMap.Map(m => m.norme).Name("Norm");
-
-            //config.RegisterClassMap(classMap);
-
-            return config;
-        }
-        */
     }
 }
