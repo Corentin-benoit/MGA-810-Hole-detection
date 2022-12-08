@@ -218,6 +218,7 @@ namespace Application_Fusion260_V2
                                 }
                                 AdvanceHole myAdvanceHole = new AdvanceHole(feature.GetID(), feature.GetTypeName(), holeFaces, list_farSideEl, list_nearSideEl);
                                 list_Hole.Add(myAdvanceHole);
+                               
                                 myAdvanceHole.printData();
                             }
                             else
@@ -229,8 +230,10 @@ namespace Application_Fusion260_V2
                                 }
                                 AdvanceHole myAdvanceHole = new AdvanceHole(feature.GetID(), feature.GetTypeName(), holeFaces, list_nearSideEl);
                                 list_Hole.Add(myAdvanceHole);
+                                myAdvanceHole.printData();
                             }
                             featdata.ReleaseSelectionAccess();
+                            
                         }
                         break;
                     /*

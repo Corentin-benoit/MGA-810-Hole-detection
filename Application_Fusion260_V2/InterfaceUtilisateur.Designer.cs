@@ -34,8 +34,6 @@
             this.Pmax_TextBox = new System.Windows.Forms.TextBox();
             this.Dmin_TextBox = new System.Windows.Forms.TextBox();
             this.Dmax_TextBox = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -96,14 +94,6 @@
             this.Dmax_TextBox.Text = "Diamètre Max";
             this.Dmax_TextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Dmax_TextBox_MouseDown);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(574, 354);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
             // InterfaceUtilisateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -111,7 +101,6 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1060, 633);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Dmax_TextBox);
             this.Controls.Add(this.Dmin_TextBox);
             this.Controls.Add(this.Pmax_TextBox);
@@ -120,7 +109,6 @@
             this.DoubleBuffered = true;
             this.Name = "InterfaceUtilisateur";
             this.Text = "InterfaceUtilisateur";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,6 +121,5 @@
         private System.Windows.Forms.TextBox Pmax_TextBox;
         private System.Windows.Forms.TextBox Dmin_TextBox;
         private System.Windows.Forms.TextBox Dmax_TextBox;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
