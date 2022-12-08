@@ -165,8 +165,10 @@ namespace Application_Fusion260_V2
                                         list_Hole.Add(myCounterSink);
                                         break;
                                     default:
+                                        WizardHole myWizardHole = new WizardHole(id, functionHoleCreation, holeFaces);
+                                        //list_Hole.Add(myWizardHole);
+                                        myWizardHole.colorHole(swDoc, "green");
                                         break;
-
                                 }
 
 

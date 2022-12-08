@@ -35,11 +35,11 @@ namespace Application_Fusion260_V2
             Analyse app = new Analyse();
             if(Dmin_TextBox.Text == "" || Pmin_TextBox.Text == "" || Pmax_TextBox.Text == "" || Dmax_TextBox.Text == "")
             {
-                app.run(1, 1000, 1, 100);
+                app.run((float)0.1, 1000, (float)0.1, 100);
             }
             else if(Dmin_TextBox.Text == "Diamètre Min" || Pmin_TextBox.Text == "Profondeur Min" || Pmax_TextBox.Text == "Profondeur Max" || Dmax_TextBox.Text == "Diamètre Max") 
             {
-                app.run(1, 1000, 1, 100);
+                app.run((float)0.1, 1000, (float)0.1, 100);
             }
             else {
                 app.run(float.Parse(Pmin_TextBox.Text), float.Parse(Pmax_TextBox.Text), float.Parse(Dmin_TextBox.Text), float.Parse(Dmax_TextBox.Text));
@@ -77,6 +77,11 @@ namespace Application_Fusion260_V2
         private void Dmax_TextBox_MouseDown(object sender, MouseEventArgs e)
         {
             Dmax_TextBox.Text = "";
+        }
+
+        private void InterfaceUtilisateur_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

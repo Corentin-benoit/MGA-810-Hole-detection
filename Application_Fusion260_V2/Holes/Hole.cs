@@ -119,9 +119,10 @@ namespace hole_namespace
             double lu = this.depth;
             double radius = this.diameter/2.0f;
             double dc = 2*radius;
+            bool activation_lu = false;
 
             //Depth test
-            if(max_depth != 0)
+            if (max_depth != 0)
             {
                 if (lu > max_depth) 
                 {
@@ -149,13 +150,14 @@ namespace hole_namespace
             }
 
             //Match test
-
-            if (lu > 3*dc) 
+            if (activation_lu == true)
             {
-                Console.WriteLine("Vérification LU fausse");
-                return false;
-            }
-                        
+                if (lu > 3 * dc)
+                {
+                    Console.WriteLine("Vérification LU fausse");
+                    return false;
+                }
+            }   
             return true;
         }
 

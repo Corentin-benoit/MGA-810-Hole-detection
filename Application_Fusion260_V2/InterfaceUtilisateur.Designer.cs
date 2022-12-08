@@ -109,6 +109,7 @@
             this.DoubleBuffered = true;
             this.Name = "InterfaceUtilisateur";
             this.Text = "InterfaceUtilisateur";
+            this.Load += new System.EventHandler(this.InterfaceUtilisateur_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

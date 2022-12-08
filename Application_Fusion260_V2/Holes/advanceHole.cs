@@ -25,6 +25,11 @@ namespace hole_namespace
             this.holeFaces = holeFaces;
             this.nearSideElements = nearSideElements;
             this.farSideElements = farSideElements;
+            this.diameter = nearSideElements[1].Diameter;
+            this.depth = nearSideElements[1].BlindDepth;
+            Console.WriteLine(nearSideElements[1].BlindDepth);
+
+
 
 
 
