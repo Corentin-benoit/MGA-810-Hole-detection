@@ -27,27 +27,19 @@ namespace hole_namespace
             this.farSideElements = farSideElements;
             this.diameter = nearSideElements[1].Diameter;
             this.depth = nearSideElements[1].BlindDepth;
-            Console.WriteLine(nearSideElements[1].BlindDepth);
-
-
-
-
+         
 
             foreach (AdvancedHoleElementData nsElements in nearSideElements)
             { // on parcours ces tableaux pour connaitre les types des éléments
-
-
-
                 this.holesSize.Add(nsElements.Size);
                 this.holesType.Add(Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), nsElements.ElementType));
 
                 Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), nsElements.ElementType);
             }
+
+
             foreach (AdvancedHoleElementData fsElements in farSideElements)
             { // on parcours ces tableaux pour connaitre les tailles des éléments
-
-
-
                 this.holesSize.Add(fsElements.Size);
                 this.holesType.Add(Enum.GetName(typeof(swAdvWzdGeneralHoleTypes_e), fsElements.ElementType));
 
@@ -62,7 +54,10 @@ namespace hole_namespace
             this.functionHoleCreation = functionHoleCreation;
             this.holeFaces = holeFaces;
             this.nearSideElements = nearSideElements;
+            this.diameter = nearSideElements[1].Diameter;
+            this.depth = nearSideElements[1].BlindDepth;
             this.farSideElements = null;
+          
 
             List<String> holesSize = new List<String>();
             List<String> holesType = new List<String>();
@@ -109,9 +104,6 @@ namespace hole_namespace
                 list_properties.Add(((this.holesType)[cpt]).ToString()); //odd
                 cpt++;
             }
-            
-
-
             return list_properties;
         }
 

@@ -30,6 +30,13 @@ using Application_Fusion260;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Forms.Application;
 
+/*
+ * Mirror1 == Miror
+ * LPattern1 == LP pattern
+ * 
+ */
+
+
 namespace Application_Fusion260_V2
 {
     internal class Analyse
@@ -48,7 +55,7 @@ namespace Application_Fusion260_V2
 
 /*
 * -----------------------------------------------------------------------------------------------------------------
-* ---------------------------------------------------MAIN---------------------------------------------------------- 
+* ---------------------------------------------------ANALYSE------------------------------------------------------- 
 * -----------------------------------------------------------------------------------------------------------------
 */
         //static void Main(string[] args)
@@ -60,12 +67,6 @@ namespace Application_Fusion260_V2
             * -------------------------------------------INITIALISATION-------------------------------------------------------- 
             * -----------------------------------------------------------------------------------------------------------------
             */
-
-            // Interface Utilisateur 
-            //Application.Run(new InterfaceUtilisateur());
-           
-            
-            
 
             // Model Solidworks
             ModelDoc2 swDoc;
@@ -105,11 +106,10 @@ namespace Application_Fusion260_V2
 * ----------------------------------------DISPLAY FEATURES NAMES--------------------------------------------------- 
 * -----------------------------------------------------------------------------------------------------------------
 */
-            /*
-            List<TreeControlItem> featureList;
-            displayFeaturesNames(List < TreeControlItem > featureList, Feature_Explorer myFeatureExplorer)
-            */
-
+            
+            List<TreeControlItem> featureList = new List<TreeControlItem>();
+            displayFeaturesNames(featureList, myFeatureExplorer);
+            
 
 /*
 * -----------------------------------------------------------------------------------------------------------------
@@ -167,7 +167,7 @@ namespace Application_Fusion260_V2
                                     default:
                                         WizardHole myWizardHole = new WizardHole(id, functionHoleCreation, holeFaces);
                                         //list_Hole.Add(myWizardHole);
-                                        myWizardHole.colorHole(swDoc, "green");
+                                        myWizardHole.colorHole(swDoc, "blue");
                                         break;
                                 }
 
@@ -264,6 +264,22 @@ namespace Application_Fusion260_V2
                                 list_Hole.Add(simpleHole);
                             }
                         }
+                        break;
+
+                    /*
+                     * ---------------------------------------
+                     * -----------LINEAR PATTERN--------------
+                     * ---------------------------------------
+                     */
+                    case "LPattern1":
+                        break;
+
+                    /*
+                    * ---------------------------------------
+                    * ---------------MIRROR------------------
+                    * ---------------------------------------
+                    */
+                    case "Mirror1":
                         break;
                     /*
                      * ---------------------------------------
@@ -401,8 +417,6 @@ namespace Application_Fusion260_V2
             Export exporter = new Export();
             exporter.ass_nb_adv_element = cpt_adv_max;
             exporter.write_csv(list_holes_for_csv, "test_holes");
-            SnapShot screeen;
-         
             Thread.Sleep(100);
           
         }

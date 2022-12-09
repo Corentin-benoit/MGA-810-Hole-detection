@@ -84,6 +84,12 @@ namespace hole_namespace
                     descriptionColor[1] = 152.0f / 255.0f;
                     descriptionColor[2] = 28.0f / 255.0f;
                     break;
+                case "blue":
+                    //rgb(54, 87, 133)
+                    descriptionColor[0] = 54.0f / 255.0f;
+                    descriptionColor[1] = 87.0f / 255.0f;
+                    descriptionColor[2] = 133.0f / 255.0f;
+                    break;
                 default:
                     //Penser à récupérer
                     throw new ArgumentException("Parameter is not a usable color", nameof(color));
@@ -122,20 +128,19 @@ namespace hole_namespace
             bool activation_lu = false;
 
             //Depth test
-            if (max_depth != 0)
+            if (max_depth != 0 && lu != 0)
             {
                 if (lu > max_depth) 
                 {
                     Console.WriteLine("Profondeur max dépassé");
                     return false;
                 }
+                if (lu < min_depth)
+                {
+                    Console.WriteLine("Profondeur min dépassé");
+                    return false;
+                }
             }
-            if (lu < min_depth)
-            {
-                Console.WriteLine("Profondeur min dépassé");
-                return false;
-            }
-            
 
             //Radius test
             if (radius < min_radius) 
