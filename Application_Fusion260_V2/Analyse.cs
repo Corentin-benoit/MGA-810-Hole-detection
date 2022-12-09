@@ -106,9 +106,10 @@ namespace Application_Fusion260_V2
 * ----------------------------------------DISPLAY FEATURES NAMES--------------------------------------------------- 
 * -----------------------------------------------------------------------------------------------------------------
 */
-            
+           /* 
             List<TreeControlItem> featureList = new List<TreeControlItem>();
             displayFeaturesNames(featureList, myFeatureExplorer);
+           */
             
 
 /*
@@ -119,6 +120,7 @@ namespace Application_Fusion260_V2
             //Browse inside FeatureManager
             foreach (Feature feature in f_list){
                 //We search inside the tree with the Solidworks name of each function
+                //Console.WriteLine(feature.GetTypeName2());
                 switch (feature.GetTypeName2())
                 {
                     /*
@@ -266,26 +268,64 @@ namespace Application_Fusion260_V2
                         }
                         break;
 
+
                     /*
                      * ---------------------------------------
                      * -----------LINEAR PATTERN--------------
                      * ---------------------------------------
                      */
-                    case "LPattern1":
+                    case "LPattern":
+                        Object[] tab_Faces_LP;
+                        tab_Faces_LP = feature.GetFaces();
+                        foreach (Face2 face in tab_Faces_LP)
+                        {
+                            color(swDoc, "blue", face);
+                        }
+                        Console.WriteLine("\n\n\nLINEAR PATTERN\n\n\n");
+
                         break;
+
+                    /*
+                     * ---------------------------------------
+                     * -----------CIRCULAR PATTERN------------
+                     * ---------------------------------------
+                     */
+                    /*
+                    case "CirPattern":
+                        Object[] tab_Faces_CP;
+                        tab_Faces_CP = feature.GetFaces();
+                        foreach (Face2 face in tab_Faces_CP)
+                        {
+                            color(swDoc, "blue", face);
+                        }
+                        Console.WriteLine("\n\n\n CIRCULAR PATTERN\n\n\n");
+                        break;
+                    */
 
                     /*
                     * ---------------------------------------
                     * ---------------MIRROR------------------
                     * ---------------------------------------
                     */
-                    case "Mirror1":
+                    case "MirrorPattern":
+                        Object[] tab_Faces_MP;
+                        tab_Faces_MP = feature.GetFaces();
+                        foreach (Face2 face in tab_Faces_MP)
+                        {
+                            color(swDoc, "blue", face);
+                        }
+                        Console.WriteLine("\n\n\n MIRROR PATTERN\n\n\n");
                         break;
+
+
                     /*
                      * ---------------------------------------
                      * -----------EXTRUSION-------------------
                      * ---------------------------------------
                      */
+                    // gettype().getID.getname.
+                    //iscircle.getradius.getcenterpoint
+                    //
                     //To get the underlying type of feature of an Instant3D feature (i.e., "ICE"), call IFeature::GetTypeName; otherwise, call this GetTypeName. 
                     case "ICE":
                         switch (feature.GetTypeName())
@@ -482,6 +522,12 @@ namespace Application_Fusion260_V2
                     descriptionColor[0] = 75.0f / 255.0f;
                     descriptionColor[1] = 152.0f / 255.0f;
                     descriptionColor[2] = 28.0f / 255.0f;
+                    break;
+                case "blue":
+                    //rgb(54, 87, 133)
+                    descriptionColor[0] = 54.0f / 255.0f;
+                    descriptionColor[1] = 87.0f / 255.0f;
+                    descriptionColor[2] = 133.0f / 255.0f;
                     break;
                 default:
                     //Penser à récupérer

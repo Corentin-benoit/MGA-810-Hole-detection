@@ -74,6 +74,7 @@
     <Compile Include="Fusion260.cs" />
     <Compile Include="Holes\AdvanceHole.cs" />
     <Compile Include="Analyse.cs" />
+    <Compile Include="Holes\CircularPattern.cs" />
     <Compile Include="Holes\ConicalHole.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Feature_Explorer.cs" />
@@ -81,6 +82,8 @@
     <Compile Include="Holes\HoleExport.cs" />
     <Compile Include="Holes\HoleWizard\WizardHole_CounterBore.cs" />
     <Compile Include="Holes\HoleWizard\WizardHole_CounterSink.cs" />
+    <Compile Include="Holes\LinearPattern.cs" />
+    <Compile Include="Holes\Mirror.cs" />
     <Compile Include="InterfaceUtilisateur.cs">
       <SubType>Form</SubType>
     </Compile>
