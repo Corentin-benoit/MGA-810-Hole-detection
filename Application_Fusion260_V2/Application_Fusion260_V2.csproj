@@ -82,6 +82,7 @@
     <Compile Include="Holes\HoleExport.cs" />
     <Compile Include="Holes\HoleWizard\WizardHole_CounterBore.cs" />
     <Compile Include="Holes\HoleWizard\WizardHole_CounterSink.cs" />
+    <Compile Include="Holes\HoleWizard\WizardHole_Straight_Tab.cs" />
     <Compile Include="Holes\LinearPattern.cs" />
     <Compile Include="Holes\Mirror.cs" />
     <Compile Include="InterfaceUtilisateur.cs">

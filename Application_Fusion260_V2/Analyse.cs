@@ -154,6 +154,7 @@ namespace Application_Fusion260_V2
 
                                 if (hw.HoleDiameter != 0){ diameter = hw.HoleDiameter; }
                                 else{diameter = hw.ThruHoleDiameter;}
+                                Console.WriteLine("FastenerType" + hw.FastenerType2);
                                 switch (hw.FastenerType2)
                                 {
 
@@ -162,9 +163,25 @@ namespace Application_Fusion260_V2
                                         WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(hw.HoleDepth, diameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize);
                                         list_Hole.Add(myCounterBore);
                                         break;
-                                    case 141: // cas counterbore
+                                    case 141: // cas counterSink
                                         WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(hw.HoleDepth, diameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize);
                                         list_Hole.Add(myCounterSink);
+                                        break;
+                                    case 146: // cas Straight_Tab de type bottoming tapped hole 
+                                        WizardHole_Straight_Tab myHole_bottoming_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        //list_Hole.Add(myHole_bottoming_tapped_hole);
+                                        break;
+                                    case 147: //  cas Straight_Tab de type tapped hole                            
+                                        WizardHole_Straight_Tab myHole_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        //list_Hole.Add(myHole_tapped_hole);
+                                        break;
+                                    case 149: //cas Straight_Tab de type Straight pipe tapped hole
+                                        WizardHole_Straight_Tab myHole_Straight_pipe_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        //list_Hole.Add(myHole_Straight_pipe_tapped_hole);
+                                        break;
+                                        
+                                    case 121:// cas Hole de type dowel Hole
+
                                         break;
                                     default:
                                         WizardHole myWizardHole = new WizardHole(id, functionHoleCreation, holeFaces);
