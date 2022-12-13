@@ -1,4 +1,5 @@
-﻿using SldWorks;
+﻿using hole_namespace;
+using SldWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace hole_namespace
 {
-    internal class WizardHole_Straight_Tab : WizardHole
+    internal class WizardHole_Hole : WizardHole
     {
         protected string fastenerSize;
         protected new int fastenerType;
-
-        public WizardHole_Straight_Tab(double depth, double diameter, int id,
+        public WizardHole_Hole(double depth, double diameter, int id,
                                         string functionHoleCreation,
                                         List<Face2> holeFaces,
                                         int norm, int fastenerType, string fastenerSize)
@@ -23,9 +23,8 @@ namespace hole_namespace
             this.norm = norm;
             this.fastenerType = fastenerType;
             this.fastenerSize = fastenerSize;
-            
-        }
 
+        }
         /*
         * Assessors
         */
@@ -40,8 +39,6 @@ namespace hole_namespace
             get { return this.fastenerType; }
             set { this.fastenerType = value; }
         }
-
-
         public override List<string> extractCharacteristicHole()
         {
             List<string> list_properties = new List<string>();
@@ -54,7 +51,5 @@ namespace hole_namespace
             list_properties.Add((this.fastenerSize).ToString());// 6
             return list_properties;
         }
-
-
     }
 }

@@ -29,6 +29,7 @@ using namespace_Feature_Explorer;
 using Application_Fusion260;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Forms.Application;
+using Application_Fusion260_V2.Holes.HoleWizard;
 
 /*
  * Mirror1 == Miror
@@ -154,7 +155,7 @@ namespace Application_Fusion260_V2
 
                                 if (hw.HoleDiameter != 0){ diameter = hw.HoleDiameter; }
                                 else{diameter = hw.ThruHoleDiameter;}
-                                Console.WriteLine("FastenerType" + hw.FastenerType2);
+                                Console.WriteLine("FastenerType : " + hw.FastenerType2);
                                 switch (hw.FastenerType2)
                                 {
 
@@ -163,26 +164,58 @@ namespace Application_Fusion260_V2
                                         WizardHole_CounterBore myCounterBore = new WizardHole_CounterBore(hw.HoleDepth, diameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterBoreDepth, hw.CounterBoreDiameter, hw.FastenerSize);
                                         list_Hole.Add(myCounterBore);
                                         break;
+
+
                                     case 141: // cas counterSink
                                         WizardHole_CounterSink myCounterSink = new WizardHole_CounterSink(hw.HoleDepth, diameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.CounterSinkDiameter, hw.FarCounterSinkAngle, hw.FastenerSize);
                                         list_Hole.Add(myCounterSink);
                                         break;
+
+
                                     case 146: // cas Straight_Tab de type bottoming tapped hole 
-                                        WizardHole_Straight_Tab myHole_bottoming_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
-                                        //list_Hole.Add(myHole_bottoming_tapped_hole);
+                                        WizardHole_Straight_Tab my_bottoming_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(my_bottoming_tapped_hole);
                                         break;
                                     case 147: //  cas Straight_Tab de type tapped hole                            
-                                        WizardHole_Straight_Tab myHole_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
-                                        //list_Hole.Add(myHole_tapped_hole);
+                                        WizardHole_Straight_Tab my_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(my_tapped_hole);
                                         break;
                                     case 149: //cas Straight_Tab de type Straight pipe tapped hole
-                                        WizardHole_Straight_Tab myHole_Straight_pipe_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
-                                        //list_Hole.Add(myHole_Straight_pipe_tapped_hole);
+                                        WizardHole_Straight_Tab my_Straight_pipe_tapped_hole = new WizardHole_Straight_Tab(hw.TapDrillDepth, hw.TapDrillDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(my_Straight_pipe_tapped_hole);
                                         break;
-                                        
-                                    case 121:// cas Hole de type dowel Hole
 
+
+                                    case 710: //cas Hole de type Dowel Holes
+                                        
+                                        WizardHole_Hole myHole_DowelHole = new WizardHole_Hole(hw.HoleDepth, hw.HoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(myHole_DowelHole);
                                         break;
+                                    case 143: //cas Hole de type Drill Size
+                                        WizardHole_Hole myHole_DrillSize = new WizardHole_Hole(hw.HoleDepth, hw.HoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(myHole_DrillSize);
+                                        break;
+                                    case 144: //cas Hole de type screw clearance                                        
+                                        WizardHole_Hole myHole_ScrewClearance = new WizardHole_Hole(hw.HoleDepth, hw.HoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(myHole_ScrewClearance);                                      
+                                        break;
+                                    case 145: //cas Hole de type Tap
+                                        WizardHole_Hole myHole_Tap = new WizardHole_Hole(hw.HoleDepth, hw.HoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize);
+                                        list_Hole.Add(myHole_Tap);                                       
+                                        break;
+
+
+                                    case 148:// cas Tapped Hole
+                                        Console.WriteLine("FastenerSize : " + hw.FastenerSize);                                        
+                                        Console.WriteLine("ThreadDiameter : " + hw.ThreadDiameter);                   
+                                     
+                                      
+                                        Console.WriteLine("TapDrillDiameter : " + hw.TapDrillDiameter);
+                                        WizardHole_Tapped_Hole myTappedHole = new WizardHole_Tapped_Hole(hw.ThreadDepth, hw.HoleDiameter, id, functionHoleCreation, holeFaces, hw.Standard2, hw.FastenerType2, hw.FastenerSize, hw.TapDrillDiameter);
+                                        list_Hole.Add(myTappedHole);
+                                        break;
+
+
                                     default:
                                         WizardHole myWizardHole = new WizardHole(id, functionHoleCreation, holeFaces);
                                         //list_Hole.Add(myWizardHole);
@@ -423,6 +456,79 @@ namespace Application_Fusion260_V2
                             hole_for_csv.ass_counterSinkDiameter = listCharacteristics[6];
                             hole_for_csv.ass_counterSinkAngle = listCharacteristics[7];
                             hole_for_csv.ass_fastenerSize = listCharacteristics[8];
+                        }
+                        else if (listCharacteristics[0] == "146") //  cas Straight_Tab de type bottoming tapped hole  
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Straight Tab";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                            Console.WriteLine("oooooouuuuuuuuiiiii");
+                        }
+                        else if (listCharacteristics[0] == "147") //  cas Straight_Tab de type tapped hole 
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Straight Tab";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                        }
+                        else if (listCharacteristics[0] == "149") // cas Straight_Tab de type Straight pipe tapped hole 
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Straight Tab";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                        }
+                        else if (listCharacteristics[0] == "710") // cas Hole de type Dowell Hole 
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Hole";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                        }
+                        else if (listCharacteristics[0] == "143") // cas Hole de type Drill SIZE
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Hole";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                        }
+                        else if (listCharacteristics[0] == "144") // cas Hole de type screw clearance
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Hole";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                        }
+                        else if (listCharacteristics[0] == "145") // cas Hole de type TAP
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Hole";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
+                        }
+                        else if (listCharacteristics[0] == "148") // cas Tapped Hole
+                        {
+                            hole_for_csv.ass_id = listCharacteristics[1];
+                            hole_for_csv.ass_functionHoleCreation = "Hole Wizard Tapped Hole";
+                            hole_for_csv.ass_diameter = listCharacteristics[3];
+                            hole_for_csv.ass_depth = listCharacteristics[4];
+                            hole_for_csv.ass_norm = listCharacteristics[5];
+                            hole_for_csv.ass_fastenerSize = listCharacteristics[6];
                         }
                         else
                         {
