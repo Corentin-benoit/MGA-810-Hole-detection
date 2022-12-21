@@ -16,8 +16,6 @@ namespace hole_namespace
 
         protected int norm;
         protected int fastenerType;
-        private List<Face2> holeFaces1;
-        private List<Face2> holeFaces2;
 
         /*
          * Assessors
